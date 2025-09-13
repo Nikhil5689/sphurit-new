@@ -11,17 +11,22 @@
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         /* Custom styles for animations and typography */
+        :root {
+            --color-primary: #00598d;
+            --color-secondary: #e25101;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
         
-        /* Accent curved border (top-left & bottom-right) for cards */
+        /* Accent curved border (top-left & bottom-right) for hero cards */
         .accent-corner {
             position: relative;
             overflow: visible;
@@ -56,234 +61,26 @@
             border-top-left-radius: 20px;
             clip-path: ellipse(65% 65% at 80% 80%);
         }
-        /* allow smaller cards to keep accents visible */
         .accent-corner > * { position: relative; z-index: 3; }
 
+
         /* Counter visual */
-        .count-lg { font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, 'Playfair Display', serif; font-weight:800; color:#00598d; font-size:2.25rem; line-height:1; }
-        .count-sub { color:#264651; font-weight:600; }
+        .count-lg { font-family: 'Inter', sans-serif; font-weight: 800; color: var(--color-primary); font-size: 2.25rem; line-height: 1; }
+        .count-sub { color: #264651; font-weight: 600; }
 
         /* Offer countdown */
-        .offer-wrap { display:flex; gap:1rem; align-items:center; justify-content:center; flex-wrap:wrap; margin-top:1rem; }
-        .offer-countdown { display:inline-grid; grid-auto-flow:column; gap:.6rem; align-items:center; }
-        .offer-countdown .unit { background: #fff; color:#0b2b3a; padding:0.6rem .8rem; border-radius:0.5rem; font-weight:700; min-width:56px; text-align:center; box-shadow: 0 8px 24px rgba(2,48,73,0.06); }
-        .offer-tag { display:inline-block; background: linear-gradient(90deg,#e25101,#ff7b3d); color:#fff; padding:.5rem 1rem; border-radius:.75rem; font-weight:800; }
-        .offer-cta { background: linear-gradient(90deg,#00598d,#0077b3); color:white; font-weight:800; padding:.8rem 1.2rem; border-radius:.75rem; }
-
-        /* Slightly reduce size of accent corner on very small screens */
-        @media (max-width: 420px){
-            .accent-corner::before, .accent-corner::after { width:42px; height:42px; }
-            .offer-countdown .unit { min-width:44px; padding:.45rem .6rem; }
-        }
-
-        @keyframes marquee {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes textReveal {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .animate-marquee {
-            animation: marquee 36s linear infinite;
-        }
-        
-        .animate-marquee-slow {
-             animation: marquee 40s linear infinite;
-        }
-
-        .animate-fade-in-up {
-            animation: fadeInUp 0.8s ease-out forwards;
-        }
-
-        .animate-text-reveal {
-            animation: textReveal 1s ease-out forwards;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .animate-marquee, .animate-marquee-slow, .animate-fade-in-up, .animate-text-reveal {
-                animation: none !important;
-            }
-        }
-        
-        /* Custom scrollbar for horizontal sections */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        /* Hero gradient background with 3D marketing theme
-           Changed to #00598d themed gradient as requested */
-        .hero-gradient {
-            background: linear-gradient(120deg, rgba(0,89,141,0.12), rgba(0,89,141,0.06));
-            position: relative;
-        }
-
-        .hero-gradient::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(0,89,141,0.12) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        /* Dotted background */
-        .dotted-bg {
-            background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,.08) 1px, transparent 0);
-            background-size: 24px 24px;
-        }
-
-        /* 3D hover effects */
-        .card-3d {
-            transform-style: preserve-3d;
-            transition: transform 0.3s ease;
-        }
-
-        .card-3d:hover {
-            transform: perspective(1000px) rotateX(5deg) rotateY(5deg) translateZ(10px);
-        }
-
-        /* Glow effects */
-        .glow-border {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glow-border::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(226, 81, 1, 0.4), transparent);
-            transition: left 0.5s;
-        }
-
-        .glow-border:hover::before {
-            left: 100%;
-        }
-
-        /* Navbar underline animation */
-        .nav-link {
-            position: relative;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #e25101;
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        /* Scroll animations */
-        .scroll-animate {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .scroll-animate.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Chips / scrolling bar tweaks: increased height and hover border highlight */
-        #chips-container { height: 68px; align-items:center; }
-        #chips-container span { transition: box-shadow 200ms, border-color 200ms, transform 200ms; }
-        #chips-container span:hover { border-color: #00598d; box-shadow: 0 6px 20px rgba(0,89,141,0.12); transform: translateY(-2px); }
-
-        /* Flip card for 'What's Blocking Your Growth?' */
-        .flip-card { perspective: 1000px; }
-        .flip-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 0.7s;
-        }
-        .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
-        .flip-front, .flip-back {
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            position: absolute;
-            inset: 0;
-            padding: 2rem;
-            border-radius: 1rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .flip-front { background: linear-gradient(180deg,#ffffff,#fbfbfb); border:1px solid #e6e6e6; }
-        .flip-back { background: linear-gradient(180deg,#f8fafc,#eef2ff); border:1px solid rgba(0,89,141,0.12); transform: rotateY(180deg); color:#0b2b3a; }
-
-        /* Thick gradient border for 'What We Deliver' cards */
-        .gradient-border {
-            padding: 1px;
-            border-radius: 1rem;
-            background: linear-gradient(90deg,#e25101 0%, #00598d 60%);
-        }
-        .gradient-border > .inner {
-            background: white;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            height: 100%;
-        }
-        .deliver-btn {
-            background: linear-gradient(90deg, #00598d, #0077b3);
-            color: white;
-            padding: 0.65rem 1rem;
-            border-radius: 0.6rem;
-            font-weight: 700;
-        }
-
-        /* Flow arrow between solution cards (visible on md+) */
-        .flow-arrow { display:none; }
-        @media (min-width: 768px) {
-            .flow-arrow { display:flex; align-items:center; justify-content:center; }
-        }
-
-        /* Brands marquee tweaks: force single-line horizontal scroll */
-        .brands-marquee { overflow: hidden; white-space: nowrap; }
-        .brands-track { display: inline-flex; gap: 2rem; align-items:center; padding: 1rem 0; }
-        .brand-item { display:inline-flex; align-items:center; justify-content:center; gap:0.75rem; padding:0.5rem 1rem; background: #fff; border-radius: 0.75rem; border: 1px solid #eee; }
+        .offer-wrap { display: flex; gap: 1rem; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+        .offer-countdown { display: inline-grid; grid-auto-flow: column; gap: .6rem; align-items: center; }
+        .offer-countdown .unit { background: #fff; color: #0b2b3a; padding: 0.6rem .8rem; border-radius: 0.5rem; font-weight: 700; min-width: 56px; text-align: center; box-shadow: 0 8px 24px rgba(2, 48, 73, 0.06); }
+        .offer-tag { display: inline-block; background: linear-gradient(90deg, #e25101, #ff7b3d); color: #fff; padding: .5rem 1rem; border-radius: .75rem; font-weight: 800; }
+        .offer-cta { background: linear-gradient(90deg, #00598d, #0077b3); color: white; font-weight: 800; padding: .8rem 1.2rem; border-radius: .75rem; }
 
         /* Facing Issues package card */
         .package-card { border: 2px solid #e6eef5; background: linear-gradient(180deg,#fff,#f7fbff); padding:2rem; border-radius:1rem; max-width:900px; margin:0 auto; text-align:center; }
-
-        /* Thinking Tank cards: equal heights */
-        .blog-equal { height:100%; display:flex; flex-direction:column; justify-content:space-between; border:1px solid #e6e6e6; box-shadow:0 8px 20px rgba(15,23,42,0.04); padding:1.5rem; border-radius:0.75rem; }
-        
-        /* Removing conflicting accent-corner styles and fixing corner-border implementation */
         .corner-border {
           position: relative;
           border-radius: 1rem;
           overflow: hidden;
-          border: 2px solid #e5e7eb; /* light gray base border */
         }
         .corner-border::before {
           content: "";
@@ -292,11 +89,9 @@
           left: 0;
           width: 40px;
           height: 40px;
-          border-top: 4px solid #00598d; /* blue */
-          border-left: 4px solid #00598d; /* blue */
+          border-top: 4px solid #00598d;
+          border-left: 4px solid #00598d;
           border-top-left-radius: 1rem;
-          pointer-events: none; /* do not block clicks inside the card */
-          z-index: 0; /* keep pseudo behind card content */
         }
         .corner-border::after {
           content: "";
@@ -305,54 +100,148 @@
           right: 0;
           width: 40px;
           height: 40px;
-          border-bottom: 4px solid #ff7a1a; /* orange */
-          border-right: 4px solid #ff7a1a; /* orange */
+          border-bottom: 4px solid #ff7a1a;
+          border-right: 4px solid #ff7a1a;
           border-bottom-right-radius: 1rem;
-          pointer-events: none;
-          z-index: 0;
         }
-        /* Ensure card content renders above the corner pseudo-elements */
         .corner-border > * { position: relative; z-index: 2; }
- 
-         /* Ensure corner borders don't appear in hero section */
-         .hero-gradient .corner-border::before,
-         .hero-gradient .corner-border::after {
-           display: none !important;
-         }
 
+
+        @media (max-width: 420px) {
+            .offer-countdown .unit { min-width: 44px; padding: .45rem .6rem; }
+        }
+
+        /* Animations */
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            animation: marquee 40s linear infinite;
+        }
+        
+        .animate-text-reveal {
+            animation: textReveal 1s ease-out forwards;
+        }
+
+        @keyframes textReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Scroll animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero gradient background */
+        .hero-gradient {
+            background: linear-gradient(120deg, rgba(0, 89, 141, 0.12), rgba(0, 89, 141, 0.06));
+            position: relative;
+        }
+
+        /* Dotted background */
+        .dotted-bg {
+            background-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, .08) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+
+        /* 3D hover effects */
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.4s ease;
+        }
+        .card-3d:hover {
+            transform: perspective(1000px) rotateX(3deg) rotateY(-4deg) scale(1.02);
+        }
+
+        /* Navbar underline animation */
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-secondary);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Chips / scrolling bar */
+        .chip { transition: all 200ms ease; }
+        .chip:hover { border-color: var(--color-primary); box-shadow: 0 6px 20px rgba(0, 89, 141, 0.12); transform: translateY(-2px); }
+
+        /* Flip card */
+        .flip-card { perspective: 1000px; cursor: pointer; }
+        .flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        .flip-card.is-flipped .flip-inner { transform: rotateY(180deg); }
+        .flip-front, .flip-back {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            position: absolute;
+            inset: 0;
+            padding: 2rem;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .flip-front { background: linear-gradient(180deg, #ffffff, #fbfbfb); border: 1px solid #e6e6e6; }
+        .flip-back { background: linear-gradient(180deg, #f8fafc, #eef2ff); border: 1px solid rgba(0, 89, 141, 0.12); transform: rotateY(180deg); color: #0b2b3a; }
+
+        /* Brands marquee */
+        .brands-marquee { overflow: hidden; white-space: nowrap; }
+        .brands-track { display: inline-flex; gap: 2rem; align-items: center; padding: 1rem 0; }
+        .brand-item { display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 0.5rem 1rem; background: #fff; border-radius: 0.75rem; border: 1px solid #eee; transition: all 0.3s ease; }
+        .brand-item:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
     </style>
 </head>
 <body class="bg-white text-gray-800">
 
     <!-- Header -->
-    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-lg border-b border-gray-200 transition-all duration-300">
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-200 transition-all duration-300">
         <div class="max-w-7xl mx-auto h-20 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-2" aria-label="Sphurit home">
+            <a href="#" class="flex items-center gap-2" aria-label="Sphurit home">
                 <img src="https://img.icons8.com/plasticine/100/s-symbol.png" alt="Sphurit Logo" class="h-10 w-auto">
             </a>
             <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600" aria-label="Primary">
-                <a href="index.html" class="nav-link hover:text-[#e25101] transition-colors">Home</a>
-                <a href="about.html" class="nav-link hover:text-[#e25101] transition-colors">About Us</a>
-                <a href="services.html" class="nav-link hover:text-[#e25101] transition-colors">Services</a>
-                <a href="portfolio.html" class="nav-link hover:text-[#e25101] transition-colors">Portfolio</a>
-                <a href="contact.html" class="nav-link hover:text-[#e25101] transition-colors">Contact Us</a>
+                <a href="#" class="nav-link hover:text-[var(--color-secondary)] transition-colors">Home</a>
+                <a href="#" class="nav-link hover:text-[var(--color-secondary)] transition-colors">About Us</a>
+                <a href="#" class="nav-link hover:text-[var(--color-secondary)] transition-colors">Services</a>
+                <a href="#" class="nav-link hover:text-[var(--color-secondary)] transition-colors">Portfolio</a>
+                <a href="#" class="nav-link hover:text-[var(--color-secondary)] transition-colors">Contact Us</a>
             </nav>
-            <div class="hidden md:flex items-center gap-3">
-                <button onclick="openEnquiryModal()" aria-label="Enquire now" class="px-6 py-2.5 rounded-lg bg-[#e25101] text-white font-semibold shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all">
+            <div class="flex items-center gap-3">
+                <button id="enquire-btn-desktop" aria-label="Enquire now" class="hidden md:block px-6 py-2.5 rounded-lg bg-[var(--color-secondary)] text-white font-semibold shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all">
                     Enquire Now
                 </button>
+                <button id="menu-btn" class="md:hidden p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-secondary)]" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
             </div>
-            <button id="menu-btn" class="md:hidden p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e25101]" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
         </div>
         <div id="mobile-menu" class="hidden md:hidden border-t border-gray-200" role="dialog" aria-label="Mobile navigation">
             <nav class="px-4 py-3 grid gap-2 text-base font-medium">
-                <a href="index.html" class="block py-2 px-3 rounded-md hover:bg-gray-100">Home</a>
-                <a href="about.html" class="block py-2 px-3 rounded-md hover:bg-gray-100">About Us</a>
-                <a href="services.html" class="block py-2 px-3 rounded-md hover:bg-gray-100">Services</a>
-                <a href="portfolio.html" class="block py-2 px-3 rounded-md hover:bg-gray-100">Portfolio</a>
-                <a href="contact.html" class="block py-2 px-3 rounded-md hover:bg-gray-100">Contact Us</a>
+                <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-100">Home</a>
+                <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-100">About Us</a>
+                <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-100">Services</a>
+                <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-100">Portfolio</a>
+                <a href="#" class="block py-2 px-3 rounded-md hover:bg-gray-100">Contact Us</a>
+                <button id="enquire-btn-mobile" class="mt-2 w-full px-6 py-2.5 rounded-lg bg-[var(--color-secondary)] text-white font-semibold hover:bg-opacity-90 active:scale-95 transition-transform">Enquire Now</button>
             </nav>
         </div>
     </header>
@@ -382,21 +271,21 @@
                     </div>
                 </div>
                 <div class="mt-12 flex flex-wrap justify-center gap-4">
-                    <a href="contact.html" class="px-8 py-4 rounded-xl bg-[#e25101] text-white font-semibold shadow-lg hover:bg-opacity-90 transform hover:-translate-y-1 transition-all">Book a Strategy Call</a>
-                    <a href="portfolio.html" class="px-8 py-4 rounded-xl border border-gray-300 bg-white font-semibold hover:border-[#e25101] hover:text-[#e25101] transform hover:-translate-y-1 transition-all shadow-md">See Our Work</a>
+                    <a href="contact.html" class="px-8 py-4 rounded-xl bg-[var(--color-secondary)] text-white font-semibold shadow-lg hover:bg-opacity-90 transform hover:-translate-y-1 transition-all">Book a Strategy Call</a>
+                    <a href="portfolio.html" class="px-8 py-4 rounded-xl border border-gray-300 bg-white font-semibold hover:border-[var(--color-secondary)] hover:text-[var(--color-secondary)] transform hover:-translate-y-1 transition-all shadow-md">See Our Work</a>
                 </div>
             </div>
             <!-- Enhanced Expertise Chips Marquee -->
             <div class="relative overflow-hidden border-y border-gray-200 bg-white/60 backdrop-blur py-2" aria-label="Expertise">
-                <div id="chips-container" class="flex w-max py-6 text-sm font-medium text-gray-700 animate-marquee">
+                <div id="chips-container" class="flex w-max py-4 text-sm font-medium text-gray-700 animate-marquee">
                     <!-- Chip content will be injected by JS -->
                 </div>
             </div>
         </section>
 
         <!-- What's Blocking Your Growth Section -->
-        <section id="problems" class="bg-white scroll-animate">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center">
+        <section class="bg-white py-20 lg:py-28">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center scroll-animate">
                 <h2 class="text-3xl sm:text-4xl font-bold">What's Blocking Your Growth?</h2>
                 <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Pick your reality. We'll show the first fix, not a laundry list of services.</p>
                 <div id="problems-grid" class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
@@ -405,198 +294,73 @@
             </div>
         </section>
 
-        <!-- Why Sphurit Section -->
-        <section class="bg-gray-50 scroll-animate">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold">Why Sphurit?</h2>
-                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">We combine marketing expertise, creativity, and data science to deliver measurable growth.</p>
-                <!-- Applied corner-border class to Why Sphurit cards -->
-                <div class="mt-12 grid md:grid-cols-3 lg:grid-cols-5 gap-8">
-                    <!-- Simplified: only headings in bordered boxes with bold typography -->
-                    <div class="p-6 rounded-2xl bg-white border border-gray-200 text-center font-bold text-lg card-3d corner-border">Marketing + Creativity + Data</div>
-                    <div class="p-6 rounded-2xl bg-white border border-gray-200 text-center font-bold text-lg card-3d corner-border">High-ROI Digital Campaigns</div>
-                    <div class="p-6 rounded-2xl bg-white border border-gray-200 text-center font-bold text-lg card-3d corner-border">Creative & Data-Driven Marketing</div>
-                    <div class="p-6 rounded-2xl bg-white border border-gray-200 text-center font-bold text-lg card-3d corner-border">Global + Local Reach</div>
-                    <div class="p-6 rounded-2xl bg-white border border-gray-200 text-center font-bold text-lg card-3d corner-border">Proven SEO & Growth Hacking</div>
-                </div>
-            </div>
-        </section>
-
         <!-- What We Deliver Section -->
-        <section id="solutions" class="dotted-bg scroll-animate">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center">
+        <section class="dotted-bg py-20 lg:py-28">
+             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center scroll-animate">
                 <h2 class="text-3xl sm:text-4xl font-bold">What We Deliver</h2>
                 <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Targeted solutions designed for measurable impact and sustainable growth.</p>
-                
-                <!-- Flow arrows between blocks -->
-                <div class="mt-12 relative">
-                    <div id="solutions-grid" class="grid md:grid-cols-3 gap-8 text-left relative items-stretch">
-                        <!-- JS will inject gradient-border cards; arrows will be added between cards for flow -->
-                    </div>
-                    
-                    <!-- Flow arrows -->
-                    <!-- Decorative arrows kept minimal; per-card arrows added via JS for responsive flow -->
-                 </div>
+                <div id="solutions-grid" class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-left items-stretch">
+                    <!-- Solution cards will be injected here by JS -->
+                </div>
              </div>
          </section>
-       <!-- PERFORMANCE MARKETING RESULTS -->    
-
-        <section class="py-16 bg-gray-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 fade-up">
-                    <h2 class="text-3xl font-bold italic text-black mb-4">
-                        <span class="accent-first-letter">P</span>erformance Marketing Results
-                    </h2>
-                    <p class="text-lg text-gray-600">Real numbers from real campaigns</p>
+       
+        <!-- Performance Marketing Results -->
+        <section class="py-20 lg:py-28 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-animate">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-black mb-4">Performance Marketing Results</h2>
+                    <p class="text-lg text-gray-600">Real numbers from real campaigns.</p>
                 </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Applied corner-border class to performance marketing cards -->
-                    <div class="card-3d glass rounded-2xl p-8 text-center shadow-lg fade-up corner-border">
-                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-2)] flex items-center justify-center text-white text-2xl">📈</div>
-                        <div class="text-3xl font-bold text-[var(--accent)] counter mb-2" data-counter="2500000">0</div>
+                    <div class="card-3d border border-gray-200 bg-white p-8 text-center shadow-lg rounded-2xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-3xl font-bold text-[var(--color-primary)] mb-2 counter" data-counter="2500000">0</div>
                         <div class="text-gray-600 font-semibold">Total Reach</div>
-                        <div class="text-sm text-gray-500 mt-2">Across all campaigns</div>
                     </div>
-
-                    <div class="card-3d glass rounded-2xl p-8 text-center shadow-lg fade-up corner-border">
-                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-2)] flex items-center justify-center text-white text-2xl">🎯</div>
-                        <div class="text-3xl font-bold text-[var(--accent)] counter mb-2" data-counter="15000">0</div>
+                    <div class="card-3d border border-gray-200 bg-white p-8 text-center shadow-lg rounded-2xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-3xl font-bold text-[var(--color-primary)] mb-2 counter" data-counter="15000">0</div>
                         <div class="text-gray-600 font-semibold">Quality Leads</div>
-                        <div class="text-sm text-gray-500 mt-2">Generated this year</div>
                     </div>
-
-                    <div class="card-3d glass rounded-2xl p-8 text-center shadow-lg fade-up corner-border">
-                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-2)] flex items-center justify-center text-white text-2xl">💰</div>
-                        <div class="text-3xl font-bold text-[var(--accent)] counter mb-2" data-counter="850">0</div>
-                        <div class="text-gray-600 font-semibold">Conversions</div>
-                        <div class="text-sm text-gray-500 mt-2">High-value conversions</div>
+                    <div class="card-3d border border-gray-200 bg-white p-8 text-center shadow-lg rounded-2xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-3xl font-bold text-[var(--color-primary)] mb-2 counter" data-counter="850">0+</div>
+                        <div class="text-gray-600 font-semibold">High-Value Conversions</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- BRANDS WE HANDLE -->
-        <section class="py-16 bg-white">
+        <!-- Brands We Handle -->
+        <section class="py-16 bg-white scroll-animate">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 fade-up">
-                    <h2 class="text-3xl font-bold italic text-black mb-4">
-                        <span class="accent-first-letter">B</span>rands We Handle
-                    </h2>
-                    <p class="text-lg text-gray-600">Trusted by industry leaders across sectors</p>
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-black mb-4">Brands We Handle</h2>
+                    <p class="text-lg text-gray-600">Trusted by industry leaders across sectors.</p>
                 </div>
-
-                <!-- Horizontal marquee of brand logos (scroll right → left) -->
                 <div class="brands-marquee">
-                    <div id="brands-track" class="brands-track animate-marquee-slow">
-                        <!-- Applied corner-border class to brand items -->
-                        <div class="brand-item corner-border"> <span class="text-xl font-bold">M</span><span>MetalCorp</span></div>
-                        <div class="brand-item corner-border"> <span class="text-xl font-bold">R</span><span>Residency</span></div>
-                        <div class="brand-item corner-border"> <span class="text-xl font-bold">S</span><span>StartupFlow</span></div>
-                        <div class="brand-item corner-border"> <span class="text-xl font-bold">T</span><span>TechVision</span></div>
-                        <div class="brand-item corner-border"> <span class="text-xl font-bold">I</span><span>InnovateCorp</span></div>
-                        <div class="brand-item corner-border"> <span class="text-xl font-bold">G</span><span>GrowthLab</span></div>
-                        <!-- repeated set for seamless scroll -->
-                        <div class="brand-item corner-border"> <span class="text-xl font-bold">M</span><span>MetalCorp</span></div>
-                        <div class="brand-item corner-border"> <span class="text-xl font-bold">R</span><span>Residency</span></div>
-                        <div class="brand-item corner-border"> <span class="text-xl font-bold">S</span><span>StartupFlow</span></div>
-                        <div class="brand-item corner-border"> <span class="text-xl font-bold">T</span><span>TechVision</span></div>
-                        <div class="brand-item corner-border"> <span class="text-xl font-bold">I</span><span>InnovateCorp</span></div>
-                        <div class="brand-item corner-border"> <span class="text-xl font-bold">G</span><span>GrowthLab</span></div>
+                    <div id="brands-track" class="brands-track animate-marquee">
+                        <!-- Brands will be injected by JS -->
                     </div>
                 </div>
             </div>
         </section>
+
         <!-- Industries We Serve Section -->
-        <section class="bg-white scroll-animate">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center">
+        <section class="bg-gray-50 py-20 lg:py-28">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center scroll-animate">
                 <h2 class="text-3xl sm:text-4xl font-bold">Industries We Serve</h2>
                 <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Specialized expertise across diverse sectors with proven growth strategies.</p>
-                <!-- Applied corner-border class to industry cards -->
-                <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="group p-8 rounded-2xl border border-gray-200 bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 card-3d glow-border corner-border">
-                         <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r from-gray-600 to-gray-800 flex items-center justify-center">
-                             <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 00-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path></svg>
-                         </div>
-                         <h3 class="text-xl font-bold mb-3">Manufacturing</h3>
-                         <p class="text-gray-600 mb-4">Industrial equipment, steel, automotive, and heavy machinery companies looking to modernize their marketing approach.</p>
-                         <ul class="text-sm text-gray-500 space-y-1">
-                             <li>• B2B lead generation</li>
-                             <li>• Trade show amplification</li>
-                             <li>• Technical content marketing</li>
-                         </ul>
-                     </div>
-                    <div class="group p-8 rounded-2xl border border-gray-200 bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 card-3d glow-border corner-border">
-                         <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r from-blue-500 to-blue-700 flex items-center justify-center">
-                             <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-                         </div>
-                         <h3 class="text-xl font-bold mb-3">Real Estate</h3>
-                         <p class="text-gray-600 mb-4">Residential, commercial, and luxury property developers seeking qualified leads and faster sales cycles.</p>
-                         <ul class="text-sm text-gray-500 space-y-1">
-                             <li>• Pre-launch campaigns</li>
-                             <li>• Virtual tours & videos</li>
-                             <li>• Lead scoring systems</li>
-                         </ul>
-                     </div>
-                    <div class="group p-8 rounded-2xl border border-gray-200 bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 card-3d glow-border corner-border">
-                         <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r from-green-500 to-green-700 flex items-center justify-center">
-                             <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                         </div>
-                         <h3 class="text-xl font-bold mb-3">Startups</h3>
-                         <p class="text-gray-600 mb-4">SaaS, D2C, and service-based startups needing rapid growth and market validation strategies.</p>
-                         <ul class="text-sm text-gray-500 space-y-1">
-                             <li>• Product-market fit validation</li>
-                             <li>• Growth hacking strategies</li>
-                             <li>• Investor-ready metrics</li>
-                         </ul>
-                     </div>
-                    <div class="group p-8 rounded-2xl border border-gray-200 bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 card-3d glow-border corner-border">
-                         <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r from-purple-500 to-purple-700 flex items-center justify-center">
-                             <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                         </div>
-                         <h3 class="text-xl font-bold mb-3">D2C Brands</h3>
-                         <p class="text-gray-600 mb-4">Direct-to-consumer brands looking to scale their online presence and customer acquisition.</p>
-                         <ul class="text-sm text-gray-500 space-y-1">
-                             <li>• E-commerce optimization</li>
-                             <li>• Social commerce strategies</li>
-                             <li>• Customer retention campaigns</li>
-                         </ul>
-                     </div>
-                    <div class="group p-8 rounded-2xl border border-gray-200 bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 card-3d glow-border corner-border">
-                         <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r from-red-500 to-red-700 flex items-center justify-center">
-                             <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path></svg>
-                         </div>
-                         <h3 class="text-xl font-bold mb-3">Education</h3>
-                         <p class="text-gray-600 mb-4">Educational institutions and EdTech companies seeking student acquisition and engagement.</p>
-                         <ul class="text-sm text-gray-500 space-y-1">
-                             <li>• Student recruitment campaigns</li>
-                             <li>• Course promotion strategies</li>
-                             <li>• Alumni engagement programs</li>
-                         </ul>
-                     </div>
+                <div id="industries-grid" class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+                    <!-- Industry Cards will be injected by JS -->
                  </div>
             </div>
         </section>
-
-        <!-- Thinking Tank Section -->
-        <section id="thinking" class="bg-gray-50 scroll-animate">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold">Thinking Tank</h2>
-                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Short reads on what actually moves numbers. No fluff, just actionable insights.</p>
-                <div id="blogs-grid" class="mt-12 grid md:grid-cols-3 gap-8 text-left">
-                   <!-- Blog cards will be injected here by JS -->
-                </div>
-                <div class="mt-12"><a href="#" class="inline-block px-6 py-3 rounded-xl border border-gray-300 font-semibold hover:border-[#e25101] hover:text-[#e25101] transition-all">Explore More Insights</a></div>
-            </div>
-        </section>
-
-        <!-- Facing Issues with SEO/Growth Section -->
+        
+        <!-- Facing Issues with SEO/Growth Section (formerly Thinking Tank) -->
         <section class="bg-[#e25101] text-white scroll-animate">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
                 <div class="text-center">
                     <h2 class="text-3xl sm:text-4xl font-bold mb-6">Facing Issues with SEO/Growth?</h2>
                     <p class="mb-2 text-lg text-orange-100">Limited-time launch offer — complete fast-start growth bundle.</p>
-                    <!-- Applied corner-border class to package card -->
                     <div class="package-card corner-border">
                         <div class="text-4xl font-extrabold mb-2">₹49,999/-</div>
                         <div class="font-semibold mb-3">One-off package — includes a 5-page responsive website + SEO + Company profile video + Pitch deck + 1-month social media strategy calendar</div>
@@ -613,8 +377,8 @@
                         </div>
 
                         <div class="mt-6 flex items-center justify-center gap-4 flex-wrap">
-                            <a href="contact.html" class="offer-cta">Claim ₹49,999 Offer</a>
-                            <a href="contact.html" class="inline-block bg-white text-[#e25101] font-bold px-4 py-2 rounded-lg">Book a Call</a>
+                            <a href="contact.html" class="offer-cta transition-transform hover:scale-105">Claim ₹49,999 Offer</a>
+                            <a href="contact.html" class="inline-block bg-white text-[#e25101] font-bold px-4 py-2 rounded-lg transition-transform hover:scale-105">Book a Call</a>
                         </div>
                         <p class="text-xs text-gray-700 mt-3">Offer valid while slots last. Typical delivery: 3-4 weeks for full pack depending on approvals.</p>
                     </div>
@@ -633,195 +397,398 @@
                         <img src="https://img.icons8.com/plasticine/100/s-symbol.png" alt="Sphurit Logo" class="h-10 w-auto">
                         <span class="text-2xl font-bold">Sphurit</span>
                     </div>
-                    <p class="text-gray-300 mb-6 max-w-md">Strategy-first growth partner helping manufacturing, real estate, and startup brands scale with data-driven marketing solutions.</p>
-                    <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-[#e25101] flex items-center justify-center hover:bg-opacity-80 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-[#e25101] flex items-center justify-center hover:bg-opacity-80 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-[#e25101] flex items-center justify-center hover:bg-opacity-80 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                        </a>
-                    </div>
+                    <p class="text-gray-300 mb-6 max-w-md">Strategy-first growth partner helping brands scale with data-driven marketing solutions.</p>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold mb-4 text-[#e25101]">Quick Links</h3>
+                    <h3 class="text-lg font-semibold mb-4 text-[var(--color-secondary)]">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-300 hover:text-white transition-colors">Home</a></li>
-                        <li><a href="about.html" class="text-gray-300 hover:text-white transition-colors">About Us</a></li>
-                        <li><a href="services.html" class="text-gray-300 hover:text-white transition-colors">Services</a></li>
-                        <li><a href="portfolio.html" class="text-gray-300 hover:text-white transition-colors">Portfolio</a></li>
-                        <li><a href="contact.html" class="text-gray-300 hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-[var(--color-secondary)] transition-colors">Home</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-[var(--color-secondary)] transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-[var(--color-secondary)] transition-colors">Services</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold mb-4 text-[#e25101]">Contact Info</h3>
+                    <h3 class="text-lg font-semibold mb-4 text-[var(--color-secondary)]">Contact Info</h3>
                     <ul class="space-y-2 text-gray-300">
-                        <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
-                            hello@sphurit.com
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
-                            +91 90000 00000
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
-                            Pune, India
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/></svg>
-                            WhatsApp
-                        </li>
+                        <li class="flex items-center gap-2">hello@sphurit.com</li>
+                        <li class="flex items-center gap-2">+91 90000 00000</li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-400">
-                <div id="footer-year">© 2024 Sphurit Technologies Pvt Ltd. All rights reserved.</div>
+                <div id="footer-year">© 2024 Sphurit Technologies. All rights reserved.</div>
                 <div class="flex items-center gap-6">
-                    <a href="#" class="hover:text-[#e25101] transition">Privacy Policy</a>
-                    <a href="#" class="hover:text-[#e25101] transition">Terms of Service</a>
+                    <a href="#" class="hover:text-[var(--color-secondary)] transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-[var(--color-secondary)] transition-colors">Terms</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Desktop Floating CTA -->
+    <!-- Floating CTAs -->
     <div class="fixed right-6 bottom-6 hidden md:grid gap-4 z-40">
-        <button onclick="openEnquiryModal()" aria-label="Enquire now" class="w-14 h-14 rounded-full grid place-items-center bg-[#e25101] text-white shadow-xl hover:bg-opacity-90 transform hover:scale-110 transition-all">
+        <button id="enquire-btn-floating" aria-label="Enquire now" class="w-14 h-14 rounded-full grid place-items-center bg-[var(--color-secondary)] text-white shadow-xl hover:bg-opacity-90 transform hover:scale-110 transition-all">
              <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
         </button>
-        <a href="https://wa.me/919000000000?text=Hi%20Sphurit%2C%20let%27s%20talk" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="w-14 h-14 rounded-full grid place-items-center bg-white border shadow-xl hover:shadow-2xl transform hover:scale-110 transition-all">
-             <!-- Replaced truncated SVG path with a safe, short WhatsApp icon so the HTML is valid.
-                  If you prefer the full original icon, replace this with your SVG source. -->
-             <svg viewBox="0 0 24 24" aria-hidden class="w-7 h-7"><path fill="#25D366" d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path fill="#fff" d="M17 15.5c-.3.6-1.1 1-1.6 1.1-.6.1-1.2.1-1.8-.1-.4-.1-.9-.3-1.4-.6-2.5-1.1-4.1-3.5-4.2-3.7-.1-.2-.8-1.1-.8-2s.5-1.6.7-1.8c.2-.2.5-.3.8-.3.2 0 .3 0 .5.1.2.1.6.1.8.6.2.4.6 1.4.7 1.6.1.2.1.3 0 .5-.1.1-.1.2-.2.3-.1.1-.2.2-.3.3-.1.1-.2.2-.1.4.1.2.5.9 1.1 1.4 0 0 .9.8 2.2 1.6.6.3 1 .5 1.3.6.5.1 1 .1 1.4 0 .5-.1 1.4-.6 1.7-1.2.3-.6.3-1.1.2-1.2-.1-.1-.4-.2-.8-.4z"/></svg>
-         </a>
-     </div>
- </div>
- <script>
-    (function(){
-      // Robust page initializer: reveal sections, init countdowns/counters, and ensure corner borders don't block content.
-      function isInsideHeroOrSkip(node){
-        if(!node) return false;
-        const skip = ['header','footer','#hero','.hero','.hero-gradient','[role=banner]'];
-        return skip.some(sel => node.closest && node.closest(sel));
-      }
+    </div>
 
-      function revealElement(el){
-        if(!el || isInsideHeroOrSkip(el)) return;
-        try {
-          el.classList.remove('hidden','invisible');
-          el.style.opacity = '1';
-          el.style.transform = 'none';
-          if(getComputedStyle(el).display === 'none') el.style.display = '';
-        } catch(e){}
-      }
+    <!-- Enquiry Modal -->
+    <div id="enquiry-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div id="modal-content" class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full relative transform scale-95 opacity-0 transition-all duration-300">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700" aria-label="Close modal">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 id="modal-title" class="text-2xl font-bold text-center mb-2">Let's Talk Growth</h2>
+            <p class="text-center text-gray-600 mb-6">Fill out the form and we'll be in touch shortly.</p>
+            <form action="#">
+                <div class="space-y-4">
+                    <input type="text" placeholder="Your Name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]">
+                    <input type="email" placeholder="Your Email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]">
+                    <textarea placeholder="Your Message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"></textarea>
+                    <button type="submit" class="w-full px-6 py-3 rounded-lg bg-[var(--color-secondary)] text-white font-semibold shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all">Submit Enquiry</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-      function initCountdownInstance(targetDate, updateFn){
-        let t = (typeof targetDate === 'string') ? new Date(targetDate) : targetDate;
-        if(isNaN(t)) return null;
-        function tick(){
-          const now = new Date();
-          let diff = Math.max(0, Math.floor((t - now) / 1000));
-          const days = Math.floor(diff / 86400); diff %= 86400;
-          const hours = Math.floor(diff / 3600); diff %= 3600;
-          const mins = Math.floor(diff / 60); const secs = diff % 60;
-          updateFn({days,hours,mins,secs});
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    // --- Data for Dynamic Content ---
+    const AppData = {
+        rotatingHeadlines: [
+            "We Build Growth Engines.",
+            "Data-Driven Marketing.",
+            "Creative That Converts.",
+            "Strategy Before Tactics."
+        ],
+        expertiseChips: [
+            { text: 'PPC Ads', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>`},
+            { text: 'Social Media Ads', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>`},
+            { text: 'Content Marketing', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>`},
+            { text: 'CRO', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7r, 8 8-8 8-4-4-6 6" /></svg>`},
+            { text: 'Web Analytics', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>`},
+        ],
+        growthProblems: [
+            {
+                title: "Poor Lead Quality",
+                description: "Getting traffic but leads aren't converting to sales? Your targeting or offer might be off.",
+                solution: "We'll audit your funnel, refine audience targeting, and A/B test your offer to attract high-intent prospects."
+            },
+            {
+                title: "High Ad Spend, Low ROI",
+                description: "Pouring money into ads without seeing a return? It's a common path to burning cash.",
+                solution: "We implement rigorous tracking, optimize campaigns for conversions (not just clicks), and cut wasteful spending."
+            },
+            {
+                title: "Stagnant Organic Traffic",
+                description: "Your website isn't ranking, and you're invisible on Google? You're missing out on your best customers.",
+                solution: "Our SEO approach focuses on technical health, quality content, and authority building to achieve long-term rankings."
+            }
+        ],
+        solutions: [
+            { title: "Growth Audit & Strategy", description: "A deep dive into your analytics, market, and funnel to create a clear, actionable growth roadmap." },
+            { title: "Performance Marketing", description: "Precision-targeted ad campaigns on Google, Meta, and LinkedIn designed for maximum ROI." },
+            { title: "SEO & Content Authority", description: "Comprehensive SEO and content strategies that build lasting organic traffic and establish you as a market leader." }
+        ],
+        brands: [
+            "MetalCorp", "Residency", "StartupFlow", "TechVision", "InnovateCorp", "GrowthLab"
+        ],
+        industries: [
+            { 
+                title: "Manufacturing", 
+                description: "Industrial equipment, steel, automotive, and heavy machinery companies looking to modernize their marketing approach.",
+                points: ["B2B lead generation", "Trade show amplification", "Technical content marketing"],
+                icon: `<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>`,
+                color: "from-gray-600 to-gray-800"
+            },
+            { 
+                title: "Real Estate", 
+                description: "Residential, commercial, and luxury property developers seeking qualified leads and faster sales cycles.",
+                points: ["Pre-launch campaigns", "Virtual tours & videos", "Lead scoring systems"],
+                icon: `<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>`,
+                color: "from-blue-500 to-blue-700"
+            },
+            { 
+                title: "Startups", 
+                description: "SaaS, D2C, and service-based startups needing rapid growth and market validation strategies.",
+                points: ["Product-market fit validation", "Growth hacking strategies", "Investor-ready metrics"],
+                icon: `<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>`,
+                color: "from-green-500 to-green-700"
+            },
+            { 
+                title: "D2C Brands", 
+                description: "Direct-to-consumer brands looking to scale their online presence and customer acquisition.",
+                points: ["E-commerce optimization", "Social commerce strategies", "Customer retention campaigns"],
+                icon: `<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>`,
+                color: "from-purple-500 to-purple-700"
+            },
+            { 
+                title: "Education", 
+                description: "Educational institutions and EdTech companies seeking student acquisition and engagement.",
+                points: ["Student recruitment campaigns", "Course promotion strategies", "Alumni engagement programs"],
+                icon: `<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222 4 2.222V20M1 12v7a2 2 0 002 2h18a2 2 0 002-2v-7"></path></svg>`,
+                color: "from-red-500 to-red-700"
+            },
+            { 
+                title: "Healthcare", 
+                description: "Clinics, hospitals, and med-tech companies aiming to connect with patients and professionals.",
+                points: ["Patient acquisition funnels", "Telemedicine marketing", "Medical content authority"],
+                icon: `<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>`,
+                color: "from-teal-500 to-cyan-600"
+            },
+        ],
+    };
+
+    // --- Core Application Logic ---
+    const App = {
+        init() {
+            this.populateContent();
+            this.initMobileMenu();
+            this.initRotatingBanner();
+            this.initOfferCountdown();
+            this.initFlipCards();
+            this.initModal();
+            this.initScrollAnimations();
+            this.initCounters();
+            this.updateFooterYear();
+        },
+
+        populateContent() {
+            // Expertise Chips
+            const chipsContainer = document.getElementById('chips-container');
+            if(chipsContainer) {
+                const chipsHtml = [...AppData.expertiseChips, ...AppData.expertiseChips].map(chip => 
+                    `<div class="chip flex items-center gap-3 bg-white rounded-full border border-gray-200 px-4 py-2 shadow-sm cursor-pointer">
+                        <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">${chip.icon}</div>
+                        <span class="font-medium text-gray-700">${chip.text}</span>
+                    </div>`
+                ).join('');
+                chipsContainer.innerHTML = `<div class="flex items-center gap-4 px-4">${chipsHtml}</div>`;
+            }
+
+            // Growth Problems
+            const problemsGrid = document.getElementById('problems-grid');
+            if(problemsGrid) {
+                problemsGrid.innerHTML = AppData.growthProblems.map(p => `
+                    <div class="flip-card h-80">
+                        <div class="flip-inner rounded-xl shadow-lg">
+                            <div class="flip-front">
+                                <h3 class="text-2xl font-bold mb-3">${p.title}</h3>
+                                <p class="text-gray-600">${p.description}</p>
+                                <span class="mt-auto text-sm font-semibold text-[var(--color-primary)]">Click to see the fix &rarr;</span>
+                            </div>
+                            <div class="flip-back">
+                                <h3 class="text-xl font-bold mb-3">The First Fix:</h3>
+                                <p>${p.solution}</p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Solutions
+            const solutionsGrid = document.getElementById('solutions-grid');
+            if (solutionsGrid) {
+                solutionsGrid.innerHTML = AppData.solutions.map(s => `
+                    <div class="border border-gray-200 rounded-2xl bg-white p-8 h-full flex flex-col shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <h3 class="text-xl font-bold mb-3">${s.title}</h3>
+                        <p class="text-gray-600">${s.description}</p>
+                    </div>
+                `).join('');
+            }
+
+            // Brands
+            const brandsTrack = document.getElementById('brands-track');
+            if (brandsTrack) {
+                const brandsHtml = [...AppData.brands, ...AppData.brands].map(brand => `
+                    <div class="brand-item">
+                        <span class="text-xl font-bold text-[var(--color-primary)]">${brand.charAt(0)}</span>
+                        <span>${brand}</span>
+                    </div>
+                `).join('');
+                brandsTrack.innerHTML = brandsHtml;
+            }
+            
+            // Industries
+            const industriesGrid = document.getElementById('industries-grid');
+            if(industriesGrid) {
+                industriesGrid.innerHTML = AppData.industries.map(industry => `
+                    <div class="group p-8 rounded-2xl bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 card-3d border border-gray-200">
+                         <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r ${industry.color} flex items-center justify-center">
+                             ${industry.icon}
+                         </div>
+                         <h3 class="text-xl font-bold mb-3">${industry.title}</h3>
+                         <p class="text-gray-600 mb-4">${industry.description}</p>
+                         <ul class="text-sm text-gray-500 space-y-1 text-left">
+                             ${industry.points.map(p => `<li>• ${p}</li>`).join('')}
+                         </ul>
+                     </div>
+                `).join('');
+            }
+        },
+
+        initMobileMenu() {
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (!menuBtn || !mobileMenu) return;
+
+            menuBtn.addEventListener('click', () => {
+                const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+                menuBtn.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('hidden');
+            });
+        },
+        
+        initRotatingBanner() {
+            const banner = document.getElementById('rotating-banner');
+            if (!banner || AppData.rotatingHeadlines.length === 0) return;
+            
+            let currentIndex = 0;
+            banner.style.fontFamily = "'Inter', sans-serif";
+            banner.style.fontWeight = '800';
+            banner.style.fontSize = 'clamp(2.5rem, 5vw, 3.5rem)';
+
+            const updateBanner = () => {
+                banner.innerHTML = `<div class="animate-text-reveal">${AppData.rotatingHeadlines[currentIndex]}</div>`;
+                currentIndex = (currentIndex + 1) % AppData.rotatingHeadlines.length;
+            };
+
+            updateBanner();
+            setInterval(updateBanner, 3000);
+        },
+
+        initOfferCountdown() {
+            const countdownEl = document.getElementById('offer-countdown');
+            if (!countdownEl) return;
+
+            let targetDate = new Date();
+            targetDate.setDate(targetDate.getDate() + 7);
+
+            const interval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+                document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+                document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+
+                if (distance < 0) {
+                    clearInterval(interval);
+                    countdownEl.innerHTML = "<div class='text-lg font-bold'>Offer Expired</div>";
+                }
+            }, 1000);
+        },
+
+        initFlipCards() {
+            document.querySelectorAll('.flip-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    card.classList.toggle('is-flipped');
+                });
+            });
+        },
+        
+        initModal() {
+            const modal = document.getElementById('enquiry-modal');
+            const modalContent = document.getElementById('modal-content');
+            const openTriggers = document.querySelectorAll('#enquire-btn-desktop, #enquire-btn-mobile, #enquire-btn-floating');
+            const closeBtn = document.getElementById('close-modal-btn');
+
+            if (!modal || !modalContent) return;
+
+            const openModal = () => {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modalContent.classList.remove('scale-95', 'opacity-0');
+                    modalContent.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            };
+            
+            const closeModal = () => {
+                modalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            };
+
+            openTriggers.forEach(btn => btn.addEventListener('click', openModal));
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+            document.addEventListener('keydown', (e) => {
+                if(e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+            });
+        },
+
+        initScrollAnimations() {
+            const animatedElements = document.querySelectorAll('.scroll-animate');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            animatedElements.forEach(el => observer.observe(el));
+        },
+        
+        initCounters() {
+            const counters = document.querySelectorAll('.counter[data-counter]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const target = +el.getAttribute('data-counter');
+                        const duration = 2000;
+                        const frameDuration = 1000 / 60;
+                        const totalFrames = Math.round(duration / frameDuration);
+                        let frame = 0;
+                        
+                        const counter = setInterval(() => {
+                            frame++;
+                            const progress = frame / totalFrames;
+                            const currentVal = Math.round(target * progress);
+                            
+                            const suffix = el.textContent.includes('%') ? '%' : (el.textContent.includes('+') ? '+' : '');
+                            
+                            el.textContent = currentVal.toLocaleString() + suffix;
+
+                            if (frame === totalFrames) {
+                                el.textContent = target.toLocaleString() + suffix;
+                                clearInterval(counter);
+                            }
+                        }, frameDuration);
+                        
+                        observer.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(counter => observer.observe(counter));
+        },
+
+        updateFooterYear() {
+            const yearEl = document.getElementById('footer-year');
+            if (yearEl) {
+                yearEl.textContent = `© ${new Date().getFullYear()} Sphurit Technologies. All rights reserved.`;
+            }
         }
-        tick();
-        return setInterval(tick, 1000);
-      }
+    };
 
-      function pad(n){ return String(n).padStart(2,'0'); }
+    // Run the app
+    App.init();
 
-      document.addEventListener('DOMContentLoaded', function(){
-        try {
-          // 1) Reveal sections / scroll-animate items (skip hero/header/footer)
-          document.querySelectorAll('.scroll-animate, section, .reveal, .panel, .tile, .card-3d').forEach(el=>{
-            if(!isInsideHeroOrSkip(el)) revealElement(el);
-          });
-
-          // 2) Generic countdowns:
-          // - Case A: Elements with ids cd-days, cd-hours, cd-mins, cd-secs (legacy)
-          const dEl = document.getElementById('cd-days');
-          const hEl = document.getElementById('cd-hours');
-          const mEl = document.getElementById('cd-mins');
-          const sEl = document.getElementById('cd-secs');
-          if(dEl && hEl && mEl && sEl){
-            const target = new Date();
-            target.setDate(target.getDate() + 7);
-            initCountdownInstance(target, ({days,hours,mins,secs})=>{
-              dEl.textContent = pad(days); hEl.textContent = pad(hours); mEl.textContent = pad(mins); sEl.textContent = pad(secs);
-            });
-          }
-
-          // - Case B: Elements with data-countdown attribute (ISO date) or data-end
-          document.querySelectorAll('[data-countdown],[data-end]').forEach(wrapper=>{
-            if(isInsideHeroOrSkip(wrapper)) return;
-            const end = wrapper.getAttribute('data-countdown') || wrapper.getAttribute('data-end');
-            if(!end) return;
-            // find child units if present
-            const daysSpan = wrapper.querySelector('[data-unit="days"]');
-            const hoursSpan = wrapper.querySelector('[data-unit="hours"]');
-            const minsSpan = wrapper.querySelector('[data-unit="mins"]');
-            const secsSpan = wrapper.querySelector('[data-unit="secs"]');
-            const interval = initCountdownInstance(end, ({days,hours,mins,secs})=>{
-              if(daysSpan) daysSpan.textContent = pad(days);
-              if(hoursSpan) hoursSpan.textContent = pad(hours);
-              if(minsSpan) minsSpan.textContent = pad(mins);
-              if(secsSpan) secsSpan.textContent = pad(secs);
-              // fallback: if no structured spans, write compact text
-              if(!daysSpan && !hoursSpan && !minsSpan && !secsSpan){
-                wrapper.textContent = `${pad(days)}d ${pad(hours)}h ${pad(mins)}m ${pad(secs)}s`;
-              }
-            });
-            // store interval on node for later clearing if needed
-            if(interval) wrapper._cdInterval = interval;
-          });
-
-          // 3) Numeric counters: elements with data-count-to or .count-up
-          document.querySelectorAll('[data-count-to], .count-up, .count-lg').forEach(el=>{
-            if(isInsideHeroOrSkip(el)) return;
-            const to = Number(el.getAttribute('data-count-to') || el.dataset.to || el.textContent.trim());
-            if(isNaN(to) || to <= 0) return;
-            let start = 0; const duration = 1500; const stepTime = 30;
-            const steps = Math.ceil(duration / stepTime); const inc = to / steps;
-            let current = 0; const timer = setInterval(()=>{
-              current += inc;
-              if(current >= to){ el.textContent = String(Math.round(to)); clearInterval(timer); }
-              else el.textContent = String(Math.round(current));
-            }, stepTime);
-          });
-
-          // 4) Ensure corner-border pseudo-elements don't block interactions or cover content:
-          // If any corner-border parents have pseudo z-index >= content, force content above.
-          document.querySelectorAll('.corner-border').forEach(cb=>{
-            try {
-              // skip hero-contained
-              if(isInsideHeroOrSkip(cb)) return cb.classList.remove('corner-border');
-              // ensure children sit above pseudos
-              Array.from(cb.children).forEach(ch => ch.style.zIndex = ch.style.zIndex || 2);
-              cb.style.position = cb.style.position || 'relative';
-              cb.style.overflow = cb.style.overflow || 'hidden';
-            } catch(e){}
-          });
-
-          // 5) Specific: make sure sections referenced by user are visible
-          // Try common selectors for the named sections and reveal them if found
-          ['#whats-blocking','[id*="blocking"]','.whats-blocking','.what-blocking','[data-section="blocking"]',
-           '#thinking-tank','.thinking-tank','[data-section="thinking"]'].forEach(sel=>{
-            document.querySelectorAll(sel).forEach(revealElement);
-          });
-
-        } catch(err){
-          // fail-safe: log and continue
-          console.warn('init fixes error', err);
-        }      
-      });
-    })();
+});
 </script>
 
- </body>
- </html>
+</body>
+</html>
+

@@ -14,63 +14,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .animate-fade-in-up {
-            animation: fadeInUp 0.8s ease-out forwards;
-        }
+        :root{ --accent:#00598d; --accent-2:#e25101; --muted:#6b7280; }
+ 
+         body { font-family: 'Inter', sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; color:#0f172a; }
+        h1,h2,h3,h4 { font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight:700; letter-spacing:-0.01em; margin:0; }
 
-        .hero-gradient {
-            background: linear-gradient(120deg, rgba(226, 81, 1, 0.08), rgba(226, 81, 1, 0.05));
-        }
+        /* Corner-only stroke accents for cards (same pattern as index) */
+        .accent-corner { position: relative; }
+        .accent-corner::before, .accent-corner::after { content: ""; position: absolute; width:48px; height:48px; pointer-events:none; z-index:3; background:transparent; }
+        .accent-corner::before { top:-8px; left:-8px; border-top:5px solid #00598d; border-left:5px solid #00598d; border-top-left-radius:10px; }
+        .accent-corner::after { bottom:-8px; right:-8px; border-bottom:5px solid #e25101; border-right:5px solid #e25101; border-bottom-right-radius:10px; }
+        @media (max-width:420px){ .accent-corner::before, .accent-corner::after { width:36px; height:36px; border-width:4px; } }
 
-        .nav-link {
-            position: relative;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #e25101;
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .scroll-animate {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .scroll-animate.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .card-3d {
-            transform-style: preserve-3d;
-            transition: transform 0.3s ease;
-        }
-
-        .card-3d:hover {
-            transform: perspective(1000px) rotateX(5deg) rotateY(5deg) translateZ(10px);
-        }
+        /* Values / Services typography: use Inter same as index (headings, subheads, body) */
+        .values-grid, .values-grid h3, .values-grid p, .value-card { font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+        .values-grid h3 { font-weight:700; }
+        .values-grid p, .value-card p { font-weight:500; color:var(--muted); }
     </style>
 </head>
 <body class="bg-white text-gray-800">

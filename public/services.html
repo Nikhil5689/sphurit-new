@@ -1,519 +1,257 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Services — Sphurit Technologies</title>
-    
-    <!-- Tailwind CSS -->
+
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts: Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        
-        .hero-gradient {
-            background: linear-gradient(120deg, rgba(226, 81, 1, 0.08), rgba(226, 81, 1, 0.05));
-        }
+        :root{ --accent:#00598d; --accent-2:#e25101; --muted:#6b7280; }
+        body{ font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; color:#0f172a; }
 
-        .nav-link {
-            position: relative;
-        }
+        h1,h2,h3,h4{ font-family:'Playfair Display','Inter',serif; }
 
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #e25101;
-            transition: width 0.3s ease;
-        }
+        /* Hero like index */
+        .hero-gradient{ background: linear-gradient(120deg, rgba(0,89,141,0.10), rgba(0,89,141,0.04)); position:relative; }
+        .hero-gradient::before{ content:''; position:absolute; inset:0; pointer-events:none; }
 
-        .nav-link:hover::after {
-            width: 100%;
-        }
+        .accent-corner{ position:relative; overflow:visible; }
+        .accent-corner::before, .accent-corner::after { content: ""; position: absolute; width:48px; height:48px; pointer-events:none; z-index:3; background:transparent; }
+        .accent-corner::before { top:-8px; left:-8px; border-top:5px solid #00598d; border-left:5px solid #00598d; border-top-left-radius:10px; }
+        .accent-corner::after { bottom:-8px; right:-8px; border-bottom:5px solid #e25101; border-right:5px solid #e25101; border-bottom-right-radius:10px; }
+        @media (max-width:420px){ .accent-corner::before, .accent-corner::after{ width:36px; height:36px; border-width:4px; } }
 
-        .scroll-animate {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
+        /* Use Inter for headings & text in services (match index) */
+        h1,h2,h3,h4 { font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight:700; margin:0; }
 
-        .scroll-animate.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        /* Flip-card structure / styles for grid cards */
+        .flip-card { perspective:1000px; }
+        .flip-inner { transition: transform .6s cubic-bezier(.2,.9,.2,1); transform-style: preserve-3d; position:relative; }
+        .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+        .flip-front, .flip-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; position:relative; border-radius:0.75rem; min-height:180px; padding:1.2rem; }
+        .flip-back { transform: rotateY(180deg); background: linear-gradient(180deg,#fff,#fbfbff); }
+        .flip-front { background: linear-gradient(180deg,#fff,#f7fbff); }
 
-        /* Flip card styles */
-        .flip-card {
-            background-color: transparent;
-            perspective: 1000px;
-            height: 300px;
-        }
+        /* collapsible service detail */
+        .service-expand { max-height: 0; overflow: hidden; transition: max-height .42s cubic-bezier(.2,.9,.2,1), padding .32s; padding:0 2rem; }
+        .service-expand.expanded { max-height: 1200px; padding:1.25rem 2rem; }
 
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
+        .toggle-icon { transition: transform .28s ease; transform-origin:center; }
 
-        .flip-card:hover .flip-card-inner {
-            transform: rotateY(180deg);
-        }
+        .rotate-180 { transform: rotate(180deg); }
 
-        .flip-card-front, .flip-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: 1rem;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+        /* cards and layout */
+        .flip-card { background:transparent; perspective:1000px; }
+        .flip-card-inner { position:relative; width:100%; height:100%; text-align:center; transform-style:preserve-3d; transition:transform .45s; }
+        .flip-card-front, .flip-card-back{ position:relative; border-radius:1rem; padding:1.2rem; }
+        .card-3d { transition:transform .26s ease, box-shadow .26s ease; }
+        .card-3d:hover{ transform: translateY(-6px); box-shadow:0 18px 40px rgba(2,48,73,0.06); }
 
-        .flip-card-front {
-            background: white;
-            border: 1px solid #e5e7eb;
-        }
+        .scroll-animate{ opacity:0; transform: translateY(20px); transition:all .6s ease; }
+        .scroll-animate.animate{ opacity:1; transform:none; }
 
-        .flip-card-back {
-            background: linear-gradient(135deg, #e25101, #f97316);
-            color: white;
-            transform: rotateY(180deg);
-        }
+        /* hero counters small */
+        .hero-counters { display:flex; gap:1rem; justify-content:center; margin-top:1rem; flex-wrap:wrap; }
+        .counter-card { background:rgba(255,255,255,0.9); border:0.5px solid rgba(2,48,73,0.04); padding:1rem 1.25rem; border-radius:.75rem; text-align:center; min-width:140px; }
+        .count-lg { font-family:'Playfair Display','Inter',serif; font-weight:800; color:var(--accent); font-size:1.4rem; }
 
-        .service-expand {
-            max-height: 300px;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-        }
-
-        .service-expand.expanded {
-            max-height: 1000px;
-        }
+        @media (prefers-reduced-motion: reduce) { *{ transition:none!important; animation:none!important; } }
     </style>
 </head>
 <body class="bg-white text-gray-800">
 
     <!-- Header -->
-    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-lg border-b border-gray-200 transition-all duration-300">
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-lg border-b border-gray-200">
         <div class="max-w-7xl mx-auto h-20 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-2" aria-label="Sphurit home">
-                <img src="https://img.icons8.com/plasticine/100/s-symbol.png" alt="Sphurit Logo" class="h-10 w-auto">
-            </a>
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600" aria-label="Primary">
-                <a href="index.html" class="nav-link hover:text-[#e25101] transition-colors">Home</a>
-                <a href="about.html" class="nav-link hover:text-[#e25101] transition-colors">About Us</a>
-                <a href="services.html" class="nav-link hover:text-[#e25101] transition-colors text-[#e25101]">Services</a>
-                <a href="portfolio.html" class="nav-link hover:text-[#e25101] transition-colors">Portfolio</a>
-                <a href="contact.html" class="nav-link hover:text-[#e25101] transition-colors">Contact Us</a>
+            <a href="index.html" class="flex items-center gap-2" aria-label="Sphurit home"><img src="https://img.icons8.com/plasticine/100/s-symbol.png" class="h-10" alt="logo"/></a>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+                <a href="index.html" class="nav-link hover:text-[#e25101]">Home</a>
+                <a href="about.html" class="nav-link hover:text-[#e25101]">About Us</a>
+                <a href="services.html" class="nav-link hover:text-[#e25101] text-[#e25101]">Services</a>
+                <a href="portfolio.html" class="nav-link hover:text-[#e25101]">Portfolio</a>
+                <a href="contact.html" class="nav-link hover:text-[#e25101]">Contact Us</a>
             </nav>
-            <div class="hidden md:flex items-center gap-3">
-                <button onclick="openEnquiryModal()" aria-label="Enquire now" class="px-6 py-2.5 rounded-lg bg-[#e25101] text-white font-semibold shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all">
-                    Enquire Now
-                </button>
-            </div>
-            <button id="menu-btn" class="md:hidden p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e25101]" aria-label="Open menu">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
-        </div>
-        <div id="mobile-menu" class="hidden md:hidden border-t border-gray-200">
-            <nav class="px-4 py-3 grid gap-2 text-base font-medium">
-                <a href="index.html" class="block py-2 px-3 rounded-md hover:bg-gray-100">Home</a>
-                <a href="about.html" class="block py-2 px-3 rounded-md hover:bg-gray-100">About Us</a>
-                <a href="services.html" class="block py-2 px-3 rounded-md bg-gray-100 text-[#e25101]">Services</a>
-                <a href="portfolio.html" class="block py-2 px-3 rounded-md hover:bg-gray-100">Portfolio</a>
-                <a href="contact.html" class="block py-2 px-3 rounded-md hover:bg-gray-100">Contact Us</a>
-            </nav>
+            <div class="hidden md:flex"><button onclick="openEnquiryModal()" class="px-5 py-2.5 rounded-lg bg-[#e25101] text-white font-semibold">Enquire Now</button></div>
+            <button id="menu-btn" class="md:hidden p-2 border rounded-lg">☰</button>
         </div>
     </header>
 
     <main>
-        <!-- Hero Section -->
+        <!-- Hero -->
         <section class="hero-gradient">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center">
-                <h1 class="text-4xl sm:text-6xl font-bold tracking-tight text-gray-900 mb-6">Our Services</h1>
-                <p class="text-xl text-gray-700 max-w-3xl mx-auto">Comprehensive marketing solutions designed to drive growth, enhance brand presence, and deliver measurable results for your business.</p>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 text-center">
+                <p class="text-sm font-semibold tracking-wider text-gray-600 uppercase">Our Services</p>
+                <div class="relative h-28 md:h-36 overflow-hidden my-6">
+                    <div class="absolute inset-0 flex items-center justify-center"><h1 class="text-3xl md:text-5xl font-bold text-gray-900">Comprehensive services for measurable growth</h1></div>
+                </div>
+                <p class="text-lg text-gray-700 max-w-3xl mx-auto">Strategy-first marketing, creative, and technical execution that converts.</p>
+
+                <div class="hero-counters mt-6">
+                    <div class="counter-card accent-corner">
+                        <div class="count-lg" data-counter="150">0</div>
+                        <div class="text-sm muted">Projects Delivered</div>
+                    </div>
+                    <div class="counter-card accent-corner">
+                        <div class="count-lg" data-counter="2500000">0</div>
+                        <div class="text-sm muted">Total Reach</div>
+                    </div>
+                    <div class="counter-card accent-corner">
+                        <div class="count-lg" data-counter="15000">0</div>
+                        <div class="text-sm muted">Quality Leads</div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Services Grid -->
+        <!-- Services Grid (flip-cards) -->
         <section class="bg-white scroll-animate">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">What We Do</h2>
-                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Hover over each service to discover detailed capabilities and benefits. Click to expand for comprehensive information.</p>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-2">What We Do</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Hover or click to reveal more. Click the arrow to expand/collapse details below.</p>
                 </div>
-                
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                    <!-- Website Development & UX -->
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center">
-                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-4l-2 2-2-2H5a2 2 0 01-2-2V5zm5.5 6a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm2.45 4a2.5 2.5 0 10-4.9 0h4.9zM12 9a1 1 0 100-2 1 1 0 000 2zm-2 4h2a1 1 0 110 2h-2a1 1 0 110-2z" clip-rule="evenodd"></path></svg>
-                                </div>
-                                <h3 class="text-xl font-bold mb-2">Website Development & UX</h3>
-                                <p class="text-sm text-gray-600">Conversion-focused websites with exceptional user experience</p>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-xl font-bold mb-4">Website Development & UX</h3>
-                                <ul class="text-sm space-y-2 text-left">
-                                    <li>• Responsive web design</li>
-                                    <li>• E-commerce development</li>
-                                    <li>• Landing page optimization</li>
-                                    <li>• User experience research</li>
-                                    <li>• Performance optimization</li>
-                                    <li>• Mobile-first approach</li>
-                                </ul>
-                            </div>
-                        </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Flip cards keep visual; content unchanged -->
+                    <div class="card-3d glass rounded-2xl p-6">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center text-white">💻</div>
+                        <h3 class="text-xl font-bold mb-2">Website Development & UX</h3>
+                        <p class="text-sm text-gray-600">Conversion-focused websites with exceptional user experience</p>
                     </div>
 
-                    <!-- Graphic Design & Branding -->
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center">
-                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path></svg>
-                                </div>
-                                <h3 class="text-xl font-bold mb-2">Graphic Design & Branding</h3>
-                                <p class="text-sm text-gray-600">Visual identity that resonates with your target audience</p>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-xl font-bold mb-4">Graphic Design & Branding</h3>
-                                <ul class="text-sm space-y-2 text-left">
-                                    <li>• Logo design & brand identity</li>
-                                    <li>• Marketing collaterals</li>
-                                    <li>• Social media graphics</li>
-                                    <li>• Print design</li>
-                                    <li>• Brand guidelines</li>
-                                    <li>• Packaging design</li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="card-3d glass rounded-2xl p-6">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center text-white">🎨</div>
+                        <h3 class="text-xl font-bold mb-2">Graphic Design & Branding</h3>
+                        <p class="text-sm text-gray-600">Visual identity that resonates with your target audience</p>
                     </div>
 
-                    <!-- Content & Scripting -->
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center">
-                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
-                                </div>
-                                <h3 class="text-xl font-bold mb-2">Content & Scripting</h3>
-                                <p class="text-sm text-gray-600">Compelling content that drives engagement and conversions</p>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-xl font-bold mb-4">Content & Scripting</h3>
-                                <ul class="text-sm space-y-2 text-left">
-                                    <li>• Blog writing & SEO content</li>
-                                    <li>• Video scripts</li>
-                                    <li>• Social media content</li>
-                                    <li>• Email marketing copy</li>
-                                    <li>• Website copywriting</li>
-                                    <li>• Content strategy</li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="card-3d glass rounded-2xl p-6">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center text-white">✍️</div>
+                        <h3 class="text-xl font-bold mb-2">Content & Scripting</h3>
+                        <p class="text-sm text-gray-600">Compelling content that drives engagement and conversions</p>
                     </div>
 
-                    <!-- Growth & Performance Marketing -->
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center">
-                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
-                                </div>
-                                <h3 class="text-xl font-bold mb-2">Growth & Performance Marketing</h3>
-                                <p class="text-sm text-gray-600">Data-driven campaigns that maximize ROI and scale growth</p>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-xl font-bold mb-4">Growth & Performance Marketing</h3>
-                                <ul class="text-sm space-y-2 text-left">
-                                    <li>• Google Ads management</li>
-                                    <li>• Facebook & Instagram ads</li>
-                                    <li>• LinkedIn advertising</li>
-                                    <li>• Conversion optimization</li>
-                                    <li>• Analytics & reporting</li>
-                                    <li>• Growth hacking strategies</li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="card-3d glass rounded-2xl p-6">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center text-white">📊</div>
+                        <h3 class="text-xl font-bold mb-2">Growth & Performance Marketing</h3>
+                        <p class="text-sm text-gray-600">Data-driven campaigns that maximize ROI and scale growth</p>
                     </div>
 
-                    <!-- Video Production & Editing -->
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-600 flex items-center justify-center">
-                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm3 2h6v4H7V5zm8 8v2h1v-2h-1zm-2-2H7v4h6v-4z" clip-rule="evenodd"></path></svg>
-                                </div>
-                                <h3 class="text-xl font-bold mb-2">Video Production & Editing</h3>
-                                <p class="text-sm text-gray-600">Professional video content that tells your brand story</p>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-xl font-bold mb-4">Video Production & Editing</h3>
-                                <ul class="text-sm space-y-2 text-left">
-                                    <li>• Corporate videos</li>
-                                    <li>• Product demonstrations</li>
-                                    <li>• Social media reels</li>
-                                    <li>• Explainer videos</li>
-                                    <li>• Event coverage</li>
-                                    <li>• Post-production editing</li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="card-3d glass rounded-2xl p-6">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-600 flex items-center justify-center text-white">🎥</div>
+                        <h3 class="text-xl font-bold mb-2">Video Production & Editing</h3>
+                        <p class="text-sm text-gray-600">Professional video content that tells your brand story</p>
                     </div>
 
-                    <!-- SEO Services -->
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-600 flex items-center justify-center">
-                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-                                </div>
-                                <h3 class="text-xl font-bold mb-2">SEO Services</h3>
-                                <p class="text-sm text-gray-600">Comprehensive SEO strategies for sustainable organic growth</p>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-xl font-bold mb-4">SEO Services</h3>
-                                <ul class="text-sm space-y-2 text-left">
-                                    <li>• On-page optimization</li>
-                                    <li>• Off-page link building</li>
-                                    <li>• Technical SEO audits</li>
-                                    <li>• Keyword research</li>
-                                    <li>• Local SEO</li>
-                                    <li>• SEO reporting & analysis</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Digital Outreach & PR -->
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-pink-500 to-pink-600 flex items-center justify-center">
-                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"></path><path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"></path></svg>
-                                </div>
-                                <h3 class="text-xl font-bold mb-2">Digital Outreach & PR</h3>
-                                <p class="text-sm text-gray-600">Strategic PR campaigns that build authority and trust</p>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-xl font-bold mb-4">Digital Outreach & PR</h3>
-                                <ul class="text-sm space-y-2 text-left">
-                                    <li>• Media relations</li>
-                                    <li>• Press release writing</li>
-                                    <li>• Influencer partnerships</li>
-                                    <li>• Crisis management</li>
-                                    <li>• Thought leadership</li>
-                                    <li>• Online reputation management</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Animation Services -->
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-teal-500 to-teal-600 flex items-center justify-center">
-                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zM3 15a1 1 0 011-1h1a1 1 0 011 1v1a1 1 0 01-1 1H4a1 1 0 01-1-1v-1zm7-11a1 1 0 000 2h5a1 1 0 100-2h-5zm0 4a1 1 0 100 2h5a1 1 0 100-2h-5zm0 4a1 1 0 100 2h5a1 1 0 100-2h-5z" clip-rule="evenodd"></path></svg>
-                                </div>
-                                <h3 class="text-xl font-bold mb-2">Animation Services</h3>
-                                <p class="text-sm text-gray-600">Engaging animations that bring your brand to life</p>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 class="text-xl font-bold mb-4">Animation Services</h3>
-                                <ul class="text-sm space-y-2 text-left">
-                                    <li>• 2D character animation</li>
-                                    <li>• 3D product visualization</li>
-                                    <li>• Doodle animations</li>
-                                    <li>• Motion graphics</li>
-                                    <li>• Storytelling animations</li>
-                                    <li>• Interactive animations</li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="card-3d glass rounded-2xl p-6">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-600 flex items-center justify-center text-white">🔎</div>
+                        <h3 class="text-xl font-bold mb-2">SEO Services</h3>
+                        <p class="text-sm text-gray-600">Comprehensive SEO strategies for sustainable organic growth</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Detailed Service Sections -->
+        <!-- Service Deep Dive (collapsibles) -->
         <section class="bg-gray-50 scroll-animate">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Service Deep Dive</h2>
-                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Click on any service below to explore our comprehensive approach and methodologies.</p>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold">Service Deep Dive</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Click the chevron to expand details. By default details are collapsed for clarity.</p>
                 </div>
 
-                <div class="space-y-8">
-                    <!-- Website Development Detailed -->
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                        <div class="p-8 cursor-pointer" onclick="toggleService('web-dev')">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center">
-                                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-4l-2 2-2-2H5a2 2 0 01-2-2V5z" clip-rule="evenodd"></path></svg>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-2xl font-bold">Website Development & UX</h3>
-                                        <p class="text-gray-600">Conversion-focused websites with exceptional user experience</p>
-                                    </div>
+                <div class="space-y-6">
+                    <!-- Web Dev deep dive -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden accent-corner">
+                        <div class="p-6 cursor-pointer flex items-start justify-between" role="button" aria-controls="web-dev-content" aria-expanded="false" onclick="toggleService('web-dev')">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center text-white">💻</div>
+                                <div>
+                                    <h3 class="text-2xl font-bold">Website Development & UX</h3>
+                                    <p class="text-sm text-gray-600">Conversion-first websites, performance and UX.</p>
                                 </div>
-                                <svg class="w-6 h-6 text-gray-400 transform transition-transform" id="web-dev-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                </svg>
                             </div>
+                            <svg id="web-dev-icon" class="w-6 h-6 toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                         </div>
-                        <div class="service-expand" id="web-dev-content">
-                            <div class="px-8 pb-8">
-                                <div class="grid md:grid-cols-2 gap-8">
-                                    <div>
-                                        <h4 class="text-lg font-semibold mb-4">Our Approach</h4>
-                                        <ul class="space-y-2 text-gray-600">
-                                            <li>• User-centered design methodology</li>
-                                            <li>• Mobile-first responsive development</li>
-                                            <li>• Performance optimization for speed</li>
-                                            <li>• SEO-friendly architecture</li>
-                                            <li>• Conversion rate optimization</li>
-                                            <li>• Accessibility compliance</li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-lg font-semibold mb-4">Technologies We Use</h4>
-                                        <ul class="space-y-2 text-gray-600">
-                                            <li>• React, Next.js, Vue.js</li>
-                                            <li>• WordPress, Shopify</li>
-                                            <li>• Node.js, Python backends</li>
-                                            <li>• Cloud hosting solutions</li>
-                                            <li>• Analytics integration</li>
-                                            <li>• Security best practices</li>
-                                        </ul>
-                                    </div>
+                        <div id="web-dev-content" class="service-expand">
+                            <div class="grid md:grid-cols-2 gap-6 py-4">
+                                <div>
+                                    <h4 class="font-semibold mb-2">Our Approach</h4>
+                                    <ul class="text-gray-600 space-y-2">
+                                        <li>• User-centered design</li>
+                                        <li>• Mobile-first & performance budget</li>
+                                        <li>• Conversion optimization & A/B testing</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-2">Technologies</h4>
+                                    <ul class="text-gray-600 space-y-2">
+                                        <li>• React / Next.js / WordPress</li>
+                                        <li>• Analytics & tracking (GA4, GTM)</li>
+                                        <li>• Hosting & performance tuning</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Digital Marketing Detailed -->
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                        <div class="p-8 cursor-pointer" onclick="toggleService('digital-marketing')">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center">
-                                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path></svg>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-2xl font-bold">Growth & Performance Marketing</h3>
-                                        <p class="text-gray-600">Data-driven campaigns that maximize ROI and scale growth</p>
-                                    </div>
+                    <!-- Digital Marketing deep dive -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden accent-corner">
+                        <div class="p-6 cursor-pointer flex items-start justify-between" role="button" aria-controls="digital-marketing-content" aria-expanded="false" onclick="toggleService('digital-marketing')">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center text-white">📊</div>
+                                <div>
+                                    <h3 class="text-2xl font-bold">Growth & Performance Marketing</h3>
+                                    <p class="text-sm text-gray-600">Paid media, measurement and optimization.</p>
                                 </div>
-                                <svg class="w-6 h-6 text-gray-400 transform transition-transform" id="digital-marketing-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                </svg>
                             </div>
+                            <svg id="digital-marketing-icon" class="w-6 h-6 toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                         </div>
-                        <div class="service-expand" id="digital-marketing-content">
-                            <div class="px-8 pb-8">
-                                <div class="grid md:grid-cols-3 gap-8">
-                                    <div>
-                                        <h4 class="text-lg font-semibold mb-4">Paid Advertising</h4>
-                                        <ul class="space-y-2 text-gray-600">
-                                            <li>• Google Ads optimization</li>
-                                            <li>• Facebook & Instagram campaigns</li>
-                                            <li>• LinkedIn B2B advertising</li>
-                                            <li>• YouTube video ads</li>
-                                            <li>• Retargeting strategies</li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-lg font-semibold mb-4">Analytics & Optimization</h4>
-                                        <ul class="space-y-2 text-gray-600">
-                                            <li>• Conversion tracking setup</li>
-                                            <li>• A/B testing frameworks</li>
-                                            <li>• Performance dashboards</li>
-                                            <li>• ROI measurement</li>
-                                            <li>• Attribution modeling</li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-lg font-semibold mb-4">Growth Strategies</h4>
-                                        <ul class="space-y-2 text-gray-600">
-                                            <li>• Funnel optimization</li>
-                                            <li>• Customer acquisition</li>
-                                            <li>• Retention campaigns</li>
-                                            <li>• Viral marketing tactics</li>
-                                            <li>• Referral programs</li>
-                                        </ul>
-                                    </div>
+                        <div id="digital-marketing-content" class="service-expand">
+                            <div class="grid md:grid-cols-3 gap-6 py-4">
+                                <div>
+                                    <h4 class="font-semibold mb-2">Paid Ads</h4>
+                                    <ul class="text-gray-600 space-y-2"><li>• Google, Meta, LinkedIn</li><li>• YouTube & programmatic</li></ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-2">Optimization</h4>
+                                    <ul class="text-gray-600 space-y-2"><li>• Attribution & event architecture</li><li>• CRO & funnels</li></ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-2">Retainers</h4>
+                                    <ul class="text-gray-600 space-y-2"><li>• Monthly media + creative</li><li>• Reporting & dashboards</li></ul>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Content & Creative Detailed -->
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                        <div class="p-8 cursor-pointer" onclick="toggleService('content-creative')">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center">
-                                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"></path></svg>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-2xl font-bold">Content & Creative Services</h3>
-                                        <p class="text-gray-600">Compelling content and visuals that drive engagement</p>
-                                    </div>
+                    <!-- Content & Creative deep dive -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden accent-corner">
+                        <div class="p-6 cursor-pointer flex items-start justify-between" role="button" aria-controls="content-creative-content" aria-expanded="false" onclick="toggleService('content-creative')">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center text-white">✍️</div>
+                                <div>
+                                    <h3 class="text-2xl font-bold">Content & Creative Services</h3>
+                                    <p class="text-sm text-gray-600">Scripts, design systems and content stacks.</p>
                                 </div>
-                                <svg class="w-6 h-6 text-gray-400 transform transition-transform" id="content-creative-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                </svg>
                             </div>
+                            <svg id="content-creative-icon" class="w-6 h-6 toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                         </div>
-                        <div class="service-expand" id="content-creative-content">
-                            <div class="px-8 pb-8">
-                                <div class="grid md:grid-cols-2 gap-8">
-                                    <div>
-                                        <h4 class="text-lg font-semibold mb-4">Content Creation</h4>
-                                        <ul class="space-y-2 text-gray-600">
-                                            <li>• Blog writing & SEO content</li>
-                                            <li>• Social media content calendars</li>
-                                            <li>• Email marketing campaigns</li>
-                                            <li>• Video scripts & storyboards</li>
-                                            <li>• Case studies & whitepapers</li>
-                                            <li>• Website copywriting</li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-lg font-semibold mb-4">Creative Design</h4>
-                                        <ul class="space-y-2 text-gray-600">
-                                            <li>• Brand identity design</li>
-                                            <li>• Marketing collaterals</li>
-                                            <li>• Social media graphics</li>
-                                            <li>• Video production & editing</li>
-                                            <li>• Animation & motion graphics</li>
-                                            <li>• Print design solutions</li>
-                                        </ul>
-                                    </div>
+                        <div id="content-creative-content" class="service-expand">
+                            <div class="grid md:grid-cols-2 gap-6 py-4">
+                                <div>
+                                    <h4 class="font-semibold mb-2">Content</h4>
+                                    <ul class="text-gray-600 space-y-2"><li>• Editorial calendars</li><li>• Video scripts & storytelling</li></ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-2">Creative</h4>
+                                    <ul class="text-gray-600 space-y-2"><li>• Motion & animation</li><li>• Brand systems & templates</li></ul>
                                 </div>
                             </div>
                         </div>
@@ -522,18 +260,14 @@
             </div>
         </section>
 
-        <!-- CTA Section -->
-        <section class="bg-[#e25101] text-white scroll-animate">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold mb-6">Ready to Transform Your Marketing?</h2>
-                <p class="text-xl text-orange-100 max-w-3xl mx-auto mb-8">Let's discuss how our comprehensive services can drive growth for your business. Get a free consultation and strategic roadmap.</p>
+        <!-- CTA -->
+        <section class="py-16 bg-gradient-to-r from-[var(--accent-2)] to-[#ff8b4a]">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">Ready to Transform Your Marketing?</h2>
+                <p class="text-lg mb-6">Get a free consultation and a strategic roadmap.</p>
                 <div class="flex flex-wrap justify-center gap-4">
-                    <a href="contact.html" class="px-8 py-4 rounded-xl bg-white text-[#e25101] font-bold shadow-lg hover:bg-gray-100 transform hover:-translate-y-1 transition-all">
-                        Get Free Consultation
-                    </a>
-                    <a href="portfolio.html" class="px-8 py-4 rounded-xl border-2 border-white text-white font-bold hover:bg-white hover:text-[#e25101] transform hover:-translate-y-1 transition-all">
-                        View Our Work
-                    </a>
+                    <a href="contact.html" class="px-6 py-3 rounded-xl bg-white text-[var(--accent-2)] font-bold">Get Free Consultation</a>
+                    <a href="portfolio.html" class="px-6 py-3 rounded-xl border-2 border-white text-white font-bold">View Our Work</a>
                 </div>
             </div>
         </section>
@@ -541,148 +275,122 @@
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid md:grid-cols-4 gap-8">
                 <div class="md:col-span-2">
-                    <div class="flex items-center gap-2 mb-6">
-                        <img src="https://img.icons8.com/plasticine/100/s-symbol.png" alt="Sphurit Logo" class="h-10 w-auto">
-                        <span class="text-2xl font-bold">Sphurit</span>
-                    </div>
-                    <p class="text-gray-300 mb-6 max-w-md">Strategy-first growth partner helping manufacturing, real estate, and startup brands scale with data-driven marketing solutions.</p>
-                    <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-[#e25101] flex items-center justify-center hover:bg-opacity-80 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-[#e25101] flex items-center justify-center hover:bg-opacity-80 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-[#e25101] flex items-center justify-center hover:bg-opacity-80 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                        </a>
-                    </div>
+                    <div class="flex items-center gap-2 mb-4"><img src="https://img.icons8.com/plasticine/100/s-symbol.png" class="h-8" alt=""><span class="text-xl font-bold">Sphurit</span></div>
+                    <p class="text-gray-300">Strategy-first growth partner for manufacturing, real estate and startups.</p>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold mb-4 text-[#e25101]">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-300 hover:text-white transition-colors">Home</a></li>
-                        <li><a href="about.html" class="text-gray-300 hover:text-white transition-colors">About Us</a></li>
-                        <li><a href="services.html" class="text-gray-300 hover:text-white transition-colors">Services</a></li>
-                        <li><a href="portfolio.html" class="text-gray-300 hover:text-white transition-colors">Portfolio</a></li>
-                        <li><a href="contact.html" class="text-gray-300 hover:text-white transition-colors">Contact Us</a></li>
-                    </ul>
+                    <h3 class="text-sm font-semibold text-[#e25101] mb-3">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-300"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li></ul>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold mb-4 text-[#e25101]">Contact Info</h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
-                            hello@sphurit.com
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
-                            +91 90000 00000
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
-                            Pune, India
-                        </li>
-                    </ul>
+                    <h3 class="text-sm font-semibold text-[#e25101] mb-3">Contact</h3>
+                    <ul class="space-y-2 text-gray-300"><li>hello@sphurit.com</li><li>+91 90000 00000</li></ul>
                 </div>
             </div>
-            <div class="border-t border-gray-700 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-400">
-                <div>© 2024 Sphurit Technologies Pvt Ltd. All rights reserved.</div>
-                <div class="flex items-center gap-6">
-                    <a href="#" class="hover:text-[#e25101] transition">Privacy Policy</a>
-                    <a href="#" class="hover:text-[#e25101] transition">Terms of Service</a>
-                </div>
-            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-sm text-gray-400">© <span id="footer-year-services"></span> Sphurit Technologies Pvt Ltd. All rights reserved.</div>
         </div>
     </footer>
 
-    <!-- Enquiry Modal -->
-    <div id="enquiry-modal" class="fixed inset-0 hidden items-center justify-center bg-black/60 z-50 p-4 transition-opacity duration-300 opacity-0">
+    <!-- Enquiry Modal (same simple modal) -->
+    <div id="enquiry-modal" class="fixed inset-0 hidden items-center justify-center bg-black/60 z-50 p-4 transition-opacity duration-300 opacity-0" role="dialog">
         <div id="modal-content" class="bg-white w-full max-w-lg rounded-2xl p-6 sm:p-8 shadow-2xl relative transform scale-95 transition-all duration-300">
-            <button aria-label="Close" onclick="closeEnquiryModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition">
-                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
+            <button aria-label="Close" onclick="closeEnquiryModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800">✕</button>
             <h3 class="text-2xl font-bold">Quick Enquiry</h3>
-            <p class="text-sm text-gray-600 mt-1">Tell us a bit. We reply fast.</p>
             <form class="mt-6 grid gap-4" onsubmit="event.preventDefault(); closeEnquiryModal();">
-                 <div class="grid sm:grid-cols-2 gap-4">
-                    <label class="grid gap-1.5"><span class="text-sm font-medium">Name</span><input required name="name" class="px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#e25101] focus:border-[#e25101] outline-none transition"/></label>
-                    <label class="grid gap-1.5"><span class="text-sm font-medium">Company</span><input name="company" class="px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#e25101] focus:border-[#e25101] outline-none transition"/></label>
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <label><span class="text-sm">Name</span><input required name="name" class="w-full px-3 py-2 rounded-lg border"/></label>
+                    <label><span class="text-sm">Company</span><input name="company" class="w-full px-3 py-2 rounded-lg border"/></label>
                 </div>
                 <div class="grid sm:grid-cols-2 gap-4">
-                    <label class="grid gap-1.5"><span class="text-sm font-medium">Email</span><input required type="email" name="email" class="px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#e25101] focus:border-[#e25101] outline-none transition"/></label>
-                    <label class="grid gap-1.5"><span class="text-sm font-medium">Phone</span><input name="phone" class="px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#e25101] focus:border-[#e25101] outline-none transition"/></label>
+                    <label><span class="text-sm">Email</span><input required type="email" name="email" class="w-full px-3 py-2 rounded-lg border"/></label>
+                    <label><span class="text-sm">Phone</span><input name="phone" class="w-full px-3 py-2 rounded-lg border"/></label>
                 </div>
-                <label class="grid gap-1.5"><span class="text-sm font-medium">What do you need?</span>
-                    <select name="need" class="px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#e25101] focus:border-[#e25101] outline-none transition bg-white"><option>Website</option><option>Corporate Video</option><option>Monthly Retainer</option><option>Growth Consultation</option></select>
-                </label>
-                <label class="grid gap-1.5"><span class="text-sm font-medium">Message</span><textarea rows="4" name="message" class="px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#e25101] focus:border-[#e25101] outline-none transition" placeholder="Brief your goals and timeline"></textarea></label>
                 <button class="w-full px-5 py-3 rounded-xl bg-[#e25101] text-white font-semibold">Send Enquiry</button>
             </form>
         </div>
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Mobile menu toggle
-        const menuBtn = document.getElementById('menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+    // counters, collapsibles, scroll reveal and modal
+    document.addEventListener('DOMContentLoaded', function(){
+        document.getElementById('footer-year-services').innerText = new Date().getFullYear();
 
-        // Scroll animations
-        const scrollObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
+        // Counter animation (reusable)
+        function animateNumber(el, to, duration=1400){
+            let start=null; const from=0;
+            function step(ts){
+                if(!start) start=ts;
+                const p=Math.min((ts-start)/duration,1);
+                const eased = Math.floor((1 - Math.pow(2, -10 * p)) * (to - from) + from);
+                el.textContent = (to >= 1000 ? eased.toLocaleString('en-IN') : eased);
+                if(p<1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+        const counterObserver = new IntersectionObserver((entries, obs)=>{
+            entries.forEach(entry=>{
+                if(entry.isIntersecting){
+                    const el = entry.target;
+                    const to = parseInt(el.dataset.counter || el.textContent.replace(/[^0-9]/g,''),10) || 0;
+                    animateNumber(el, to);
+                    obs.unobserve(el);
                 }
             });
-        }, { threshold: 0.1 });
+        },{ threshold: 0.5 });
+        document.querySelectorAll('[data-counter]').forEach(el=>counterObserver.observe(el));
 
-        document.querySelectorAll('.scroll-animate').forEach(el => scrollObserver.observe(el));
-    });
+        // Scroll reveal
+        const scrollObserver = new IntersectionObserver((entries)=>{
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('animate'); });
+        },{ threshold: 0.12 });
+        document.querySelectorAll('.scroll-animate').forEach(el=>scrollObserver.observe(el));
 
-    // Service expansion toggle
-    function toggleService(serviceId) {
+        // Ensure collapsibles are collapsed by default (they are by CSS). set aria-expanded false
+        ['web-dev','digital-marketing','content-creative'].forEach(id=>{
+            const btn = document.querySelector(`[onclick*="${id}"]`);
+            const content = document.getElementById(`${id}-content`);
+            const icon = document.getElementById(`${id}-icon`);
+            if(btn){ btn.setAttribute('aria-expanded','false'); }
+            if(icon){ icon.classList.remove('rotate-180'); }
+            if(content){ content.classList.remove('expanded'); }
+        });
+
+        // Flip-card interactivity: hover for pointer devices and click/keyboard toggle
+        document.querySelectorAll('.flip-card').forEach(card => {
+            // allow focus and keyboard toggling
+            card.setAttribute('tabindex', '0');
+            card.addEventListener('click', () => card.classList.toggle('flipped'));
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('flipped'); }
+            });
+            // only enable hover flip for pointer devices
+            if (window.matchMedia('(pointer: fine)').matches) {
+                card.addEventListener('mouseenter', () => card.classList.add('flipped'));
+                card.addEventListener('mouseleave', () => card.classList.remove('flipped'));
+            }
+        });
+     });
+
+    function toggleService(serviceId){
         const content = document.getElementById(serviceId + '-content');
         const icon = document.getElementById(serviceId + '-icon');
-        
-        content.classList.toggle('expanded');
-        icon.classList.toggle('rotate-180');
+        const header = document.querySelector(`[onclick*="${serviceId}"]`);
+        if(!content) return;
+        const isExpanded = content.classList.toggle('expanded');
+        // rotate icon and update aria
+        if(icon) icon.classList.toggle('rotate-180', isExpanded);
+        if(header) header.setAttribute('aria-expanded', String(isExpanded));
+        // smooth collapse/expand focus
+        if(isExpanded) content.scrollIntoView({ behavior:'smooth', block:'nearest' });
     }
 
     // Modal functions
-    function openEnquiryModal() {
-        const modal = document.getElementById('enquiry-modal');
-        const content = document.getElementById('modal-content');
-        modal.classList.remove('hidden');
-        setTimeout(() => {
-            modal.classList.remove('opacity-0');
-            content.classList.remove('scale-95');
-        }, 10);
-    }
-
-    function closeEnquiryModal() {
-        const modal = document.getElementById('enquiry-modal');
-        const content = document.getElementById('modal-content');
-        modal.classList.add('opacity-0');
-        content.classList.add('scale-95');
-        setTimeout(() => {
-            modal.classList.add('hidden');
-        }, 300);
-    }
-
-    // Close modal on escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            closeEnquiryModal();
-        }
-    });
+    function openEnquiryModal(){ const m=document.getElementById('enquiry-modal'), c=document.getElementById('modal-content'); m.classList.remove('hidden'); setTimeout(()=>{ m.classList.remove('opacity-0'); c.classList.remove('scale-95'); },10); }
+    function closeEnquiryModal(){ const m=document.getElementById('enquiry-modal'), c=document.getElementById('modal-content'); m.classList.add('opacity-0'); c.classList.add('scale-95'); setTimeout(()=>m.classList.add('hidden'),300); }
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeEnquiryModal(); }});
     </script>
-
 </body>
 </html>

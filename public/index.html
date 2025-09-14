@@ -329,27 +329,42 @@
             </div>
         </section>
 
-        <!-- Brands We Handle -->
-        <section class="py-16 bg-white scroll-animate">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-black mb-4">Brands We Handle</h2>
-                    <p class="text-lg text-gray-600">Trusted by industry leaders across sectors.</p>
-                </div>
-                <div class="brands-marquee">
-                    <div id="brands-track" class="brands-track  animate-marquee">
-                        <!-- Brands will be injected by JS -->
-                    </div>
-                </div>
-            </div>
-        </section>
+     <!-- Brands We Handle -->
+<section class="py-16 bg-white scroll-animate">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-black mb-4">Brands We Handle</h2>
+      <p class="text-lg text-gray-600">Trusted by industry leaders across sectors.</p>
+    </div>
+
+    <!-- Marquee wrapper -->
+    <div class="overflow-hidden relative">
+      <div id="brands-track" class="flex gap-6 animate-marquee whitespace-nowrap border p-6 corner-border glass-card rounded-2xl overflow-hidden">
+        
+        <!-- Sample Brand Cards -->
+      
+    </div>
+  </div>
+</section>
+
+<style>
+@keyframes marquee {
+  0%   { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+.animate-marquee {
+  display: flex;
+  animation: marquee 20s linear infinite;
+}
+</style>
+
 
         <!-- Industries We Serve Section -->
         <section class="bg-gray-50 py-20 lg:py-28">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center scroll-animate">
                 <h2 class="text-3xl sm:text-4xl font-bold">Industries We Serve</h2>
                 <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Specialized expertise across diverse sectors with proven growth strategies.</p>
-                <div id="industries-grid" class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+                <div id="industries-grid" class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-left border p-6 corner-border glass-card rounded-2xl overflow-hidden">
                     <!-- Industry Cards will be injected by JS -->
                  </div>
             </div>

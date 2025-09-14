@@ -30,6 +30,35 @@
         .values-grid, .values-grid h3, .values-grid p, .value-card { font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
         .values-grid h3 { font-weight:700; }
         .values-grid p, .value-card p { font-weight:500; color:var(--muted); }
+        .corner-border {
+          position: relative;
+          border-radius: 1rem;
+          overflow: hidden;
+        }
+        .corner-border::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 40px;
+          height: 40px;
+          border-top: 4px solid #00598d;
+          border-left: 4px solid #00598d;
+          border-top-left-radius: 1rem;
+        }
+        .corner-border::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 40px;
+          height: 40px;
+          border-bottom: 4px solid #ff7a1a;
+          border-right: 4px solid #ff7a1a;
+          border-bottom-right-radius: 1rem;
+        }
+        .corner-border > * { position: relative; z-index: 2; }
+
     </style>
 </head>
 <body class="bg-white text-gray-800">
@@ -186,7 +215,7 @@
                     <p class="text-lg text-gray-600 max-w-3xl mx-auto">The principles that guide everything we do and every decision we make.</p>
                 </div>
                 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 border p-6 corner-border glass-card rounded-2xl overflow-hidden values-grid">
                     <div class="text-center p-6 rounded-2xl bg-gray-50 hover:bg-white hover:shadow-lg transition-all duration-300 card-3d">
                         <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-[#e25101] to-orange-600 flex items-center justify-center">
                             <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>

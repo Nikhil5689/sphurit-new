@@ -18,7 +18,35 @@
             --accent: #e25101;
             --accent-2: #ff7a1a;
         }
-        
+        .corner-border {
+          position: relative;
+          border-radius: 1rem;
+          overflow: hidden;
+        }
+        .corner-border::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 40px;
+          height: 40px;
+          border-top: 4px solid #00598d;
+          border-left: 4px solid #00598d;
+          border-top-left-radius: 1rem;
+        }
+        .corner-border::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 40px;
+          height: 40px;
+          border-bottom: 4px solid #ff7a1a;
+          border-right: 4px solid #ff7a1a;
+          border-bottom-right-radius: 1rem;
+        }
+        .corner-border > * { position: relative; z-index: 2; }
+
         body {
             font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             -webkit-font-smoothing: antialiased;
@@ -147,10 +175,6 @@
         <!-- HERO -->
         <section class="relative overflow-hidden py-20 lg:py-28">
             <!-- Background Video -->
-            <video class="absolute inset-0 w-full h-full object-cover -z-20" autoplay muted loop playsinline preload="auto" poster="assets/hero-poster.jpg">
-                <source src="assets/hero-loop.mp4" type="video/mp4">
-                <source src="https://cdn.pixabay.com/vimeo/294398921/pexels-artem-podrez-5752729-1080p-2-0a04f3b2d0.mp4" type="video/mp4">
-            </video>
             
             <!-- Overlay -->
             <div class="absolute inset-0 bg-white/65 backdrop-blur-sm -z-10"></div>
@@ -181,15 +205,15 @@
         <section class="bg-white py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12 fade-up">
-                    <h2 class="text-3xl sm:text-4xl font-bold italic text-black mb-3">
-                        Let's Talk <span class="accent-first-letter">G</span>rowth
+                    <h2 class="text-3xl sm:text-4xl font-bold text-black mb-3 ">
+                        Let's Talk G</span>rowth
                     </h2>
                     <p class="text-lg text-gray-600 max-w-3xl mx-auto">
                         Choose WhatsApp, email, or a call — we'll respond fast.
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 corner-borderborder p-6 corner-border glass-card rounded-2xl overflow-hidden">
                     <a href="https://wa.me/918329887691?text=Hi%20Sphurit%2C%20let%27s%20talk" target="_blank" rel="noopener noreferrer" class="tilt-card p-6 rounded-xl glass border border-gray-200 flex flex-col items-center text-center hover:border-[var(--accent)] group transition-all shadow-lg fade-up">
                         <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-4 group-hover:bg-green-500 transition-colors">
                             <svg viewBox="0 0 24 24" class="w-8 h-8 text-green-600 group-hover:text-white transition-colors" fill="currentColor">
@@ -237,12 +261,12 @@
 
         <!-- CONTACT FORM + MAP -->
         <section class="bg-gray-50 py-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start ">
                 <!-- Form -->
                 <div class="lg:col-span-2 fade-up">
-                    <div id="contact-form" class="glass rounded-2xl p-8 shadow-lg">
-                        <h3 class="text-2xl font-bold italic text-black mb-2">
-                            <span class="accent-first-letter">S</span>end us a message
+                    <div id="contact-form" class="glass rounded-2xl p-8 shadow-lg corner-borderborder p-6 corner-border glass-card rounded-2xl overflow-hidden" >
+                        <h3 class="text-2xl font-bold  text-black mb-2">
+                            S</span>end us a message
                         </h3>
                         <p class="text-sm text-gray-600 mb-6">
                             Tell us about your project and we'll reach out within one business day.
@@ -288,11 +312,11 @@
 
                 <!-- Contact Info + Map -->
                 <aside class="space-y-6 fade-up">
-                    <div class="glass rounded-xl p-6 shadow-lg">
-                        <h4 class="font-semibold text-lg mb-4 italic">
-                            <span class="accent-first-letter">C</span>ontact Info
+                    <div class="glass rounded-xl p-6 shadow-lg corner-borderborder p-6 corner-border glass-card rounded-2xl overflow-hidden">
+                        <h4 class="font-semibold text-lg mb-4  ">
+                            C</span>ontact Info
                         </h4>
-                        <p class="text-sm text-gray-600 mb-6">
+                        <p class="text-sm text-gray-600 mb-6 ">
                             We're available Mon-Fri, 9am to 6pm IST.
                         </p>
 
@@ -330,7 +354,7 @@
                     </div>
 
                     <!-- Map -->
-                    <div class="overflow-hidden rounded-2xl border border-gray-200 shadow-lg">
+                    <div class="overflow-hidden rounded-2xl border border-gray-200 shadow-lg corner-borderborder p-6 corner-border glass-card rounded-2xl overflow-hidden">
                         <iframe class="w-full h-64" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
                             src="https://maps.google.com/maps?q=Pune%2C%20India&z=13&output=embed" 
                             title="Sphurit location - Pune">
@@ -341,11 +365,12 @@
         </section>
 
         <!-- CTA BANNER -->
+
         <section class="py-12 bg-gradient-to-r from-[#ffe6dc] to-[#fff3ec]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 fade-up">
                 <div>
                     <h3 class="text-xl md:text-2xl font-bold italic text-black">
-                        Ready to Take Your Business to the <span class="accent-first-letter">N</span>ext Level?
+                        Ready to Take Your Business to the Next Level?
                     </h3>
                     <p class="text-sm text-gray-700 mt-1">
                         Schedule a free consultation and let's plan your growth roadmap.

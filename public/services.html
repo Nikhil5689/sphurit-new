@@ -134,6 +134,35 @@
         .count-lg { font-family:'Playfair Display','Inter',serif; font-weight:800; color:var(--accent); font-size:1.4rem; }
 
         @media (prefers-reduced-motion: reduce) { *{ transition:none!important; animation:none!important; } }
+        .corner-border {
+          position: relative;
+          border-radius: 1rem;
+          overflow: hidden;
+        }
+        .corner-border::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 40px;
+          height: 40px;
+          border-top: 4px solid #00598d;
+          border-left: 4px solid #00598d;
+          border-top-left-radius: 1rem;
+        }
+        .corner-border::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 40px;
+          height: 40px;
+          border-bottom: 4px solid #ff7a1a;
+          border-right: 4px solid #ff7a1a;
+          border-bottom-right-radius: 1rem;
+        }
+        .corner-border > * { position: relative; z-index: 2; }
+
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -162,16 +191,16 @@
                 <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mt-4">Comprehensive Services for Measurable Growth</h1>
                 <p class="mt-6 text-lg text-gray-700 max-w-3xl mx-auto">Strategy-first marketing, creative, and technical execution that converts.</p>
 
-                <div class="hero-counters mt-8 flex flex-wrap justify-center gap-4">
-                    <div class="counter-card accent-corner">
-                        <div class="count-lg font-serif" data-counter="150">0</div>
+                <div class="hero-counters mt-8 flex flex-wrap justify-center gap-4 ">
+                    <div class="counter-card corner-border">
+                        <div class="count-lg font-serif " data-counter="150">0</div>
                         <div class="text-sm text-gray-500">Projects Delivered</div>
                     </div>
-                    <div class="counter-card accent-corner">
+                    <div class="counter-card corner-border">
                         <div class="count-lg font-serif" data-counter="2500000">0</div>
                         <div class="text-sm text-gray-500">Total Reach</div>
                     </div>
-                    <div class="counter-card accent-corner">
+                    <div class="counter-card corner-border">
                         <div class="count-lg font-serif" data-counter="15000">0</div>
                         <div class="text-sm text-gray-500">Quality Leads</div>
                     </div>
@@ -187,7 +216,7 @@
                     <p class="text-lg text-gray-600 max-w-3xl mx-auto">Hover or click to see what's included. Expand the sections below for a deep dive.</p>
                 </div>
 
-                <div id="services-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div id="services-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 corner-border  p-6">
                     <!-- Cards will be injected by JS -->
                 </div>
             </div>

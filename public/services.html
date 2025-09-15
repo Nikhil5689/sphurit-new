@@ -29,12 +29,13 @@
         .flip-card {
             perspective: 1500px;
             cursor: pointer;
-            min-height: 260px; /* Increased height */
+            min-height: 260px; /* ensures card area is visible */
         }
         .flip-card-inner {
             position: relative;
             width: 100%;
             height: 100%;
+            min-height: 260px; /* ensure children have space */
             transform-style: preserve-3d;
             transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -54,6 +55,7 @@
             padding: 1.5rem;
             border-radius: 1rem;
             text-align: center;
+            box-sizing: border-box;
         }
         .flip-card-front {
             background: linear-gradient(180deg, #fff, #f7fbff);
@@ -86,7 +88,7 @@
             border-radius: 1rem;
             padding: 1px;
             background: linear-gradient(120deg, var(--accent), var(--accent-2));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             pointer-events: none;
@@ -134,6 +136,8 @@
         .count-lg { font-family:'Playfair Display','Inter',serif; font-weight:800; color:var(--accent); font-size:1.4rem; }
 
         @media (prefers-reduced-motion: reduce) { *{ transition:none!important; animation:none!important; } }
+
+        /* corner-border visuals */
         .corner-border {
           position: relative;
           border-radius: 1rem;
@@ -149,6 +153,8 @@
           border-top: 4px solid #00598d;
           border-left: 4px solid #00598d;
           border-top-left-radius: 1rem;
+          pointer-events: none;
+          z-index: 1;
         }
         .corner-border::after {
           content: "";
@@ -160,6 +166,8 @@
           border-bottom: 4px solid #ff7a1a;
           border-right: 4px solid #ff7a1a;
           border-bottom-right-radius: 1rem;
+          pointer-events: none;
+          z-index: 1;
         }
         .corner-border > * { position: relative; z-index: 2; }
 
@@ -169,56 +177,19 @@
 
     <!-- Header -->
     <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-lg border-b border-gray-200">
-  <div class="max-w-7xl mx-auto h-20 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-    
-    <!-- Logo -->
-    <a href="index.html" class="flex items-center gap-2" aria-label="Sphurit home">
-      <img src="https://img.icons8.com/plasticine/100/s-symbol.png" class="h-10" alt="logo" />
-    </a>
-
-    <!-- Desktop Nav -->
-    <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
-      <a href="index.html" class="nav-link hover:text-[var(--accent-2)] transition-colors">Home</a>
-      <a href="about.html" class="nav-link hover:text-[var(--accent-2)] transition-colors">About Us</a>
-      <a href="services.html" class="nav-link text-[var(--accent-2)]">Services</a>
-      <a href="portfolio.html" class="nav-link hover:text-[var(--accent-2)] transition-colors">Portfolio</a>
-      <a href="contact.html" class="nav-link hover:text-[var(--accent-2)] transition-colors">Contact Us</a>
-    </nav>
-
-    <!-- Enquire Button (Desktop) -->
-    <div class="hidden md:flex">
-      <button onclick="openEnquiryModal()" class="px-5 py-2.5 rounded-lg bg-[var(--accent-2)] text-white font-semibold transform hover:scale-105 transition-transform">
-        Enquire Now
-      </button>
-    </div>
-
-    <!-- Mobile Menu Button -->
-    <button id="menu-btn" class="md:hidden p-2 border rounded-lg">
-      ☰
-    </button>
-  </div>
-
-  <!-- Mobile Nav -->
-  <nav id="mobile-menu" class="hidden flex-col space-y-4 px-6 py-4 bg-white border-t border-gray-200 md:hidden transition-all duration-300 ease-in-out">
-    <a href="index.html" class="block nav-link hover:text-[var(--accent-2)] transition-colors">Home</a>
-    <a href="about.html" class="block nav-link hover:text-[var(--accent-2)] transition-colors">About Us</a>
-    <a href="services.html" class="block nav-link hover:text-[var(--accent-2)] transition-colors">Services</a>
-    <a href="portfolio.html" class="block nav-link hover:text-[var(--accent-2)] transition-colors">Portfolio</a>
-    <a href="contact.html" class="block nav-link hover:text-[var(--accent-2)] transition-colors">Contact Us</a>
-    <button onclick="openEnquiryModal()" class="w-full px-5 py-2.5 rounded-lg bg-[var(--accent-2)] text-white font-semibold">
-      Enquire Now
-    </button>
-  </nav>
-</header>
-
-<script>
-  const menuBtn = document.getElementById('menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-
-  menuBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-  });
-</script>
+        <div class="max-w-7xl mx-auto h-20 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2" aria-label="Sphurit home"><img src="https://img.icons8.com/plasticine/100/s-symbol.png" class="h-10" alt="logo"/></a>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+                <a href="index.html" class="nav-link hover:text-[var(--accent-2)] transition-colors">Home</a>
+                <a href="about.html" class="nav-link hover:text-[var(--accent-2)] transition-colors">About Us</a>
+                <a href="services.html" class="nav-link text-[var(--accent-2)]">Services</a>
+                <a href="portfolio.html" class="nav-link hover:text-[var(--accent-2)] transition-colors">Portfolio</a>
+                <a href="contact.html" class="nav-link hover:text-[var(--accent-2)] transition-colors">Contact Us</a>
+            </nav>
+            <div class="hidden md:flex"><button onclick="openEnquiryModal()" class="px-5 py-2.5 rounded-lg bg-[var(--accent-2)] text-white font-semibold transform hover:scale-105 transition-transform">Enquire Now</button></div>
+            <button id="menu-btn" class="md:hidden p-2 border rounded-lg">☰</button>
+        </div>
+    </header>
 
     <main>
         <!-- Hero -->
@@ -253,7 +224,7 @@
                     <p class="text-lg text-gray-600 max-w-3xl mx-auto">Hover or click to see what's included. Expand the sections below for a deep dive.</p>
                 </div>
 
-                <div id="services-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 corner-border  p-6">
+                <div id="services-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 p-6">
                     <!-- Cards will be injected by JS -->
                 </div>
             </div>
@@ -372,33 +343,81 @@
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid md:grid-cols-4 gap-8">
-                <div class="md:col-span-2">
-                    <div class="flex items-center gap-2 mb-4"><img src="https://img.icons8.com/plasticine/100/s-symbol.png" class="h-8" alt=""><span class="text-xl font-bold">Sphurit</span></div>
-                    <p class="text-gray-300">Strategy-first growth partner for manufacturing, real estate and startups.</p>
-                </div>
-                <div>
-                    <h3 class="text-sm font-semibold text-[var(--accent-2)] mb-3">Quick Links</h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
-                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
-                        <li><a href="services.html" class="hover:text-white transition-colors">Services</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-sm font-semibold text-[var(--accent-2)] mb-3">Contact</h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li><a href="mailto:hello@sphurit.com" class="hover:text-white transition-colors">hello@sphurit.com</a></li>
-                        <li><a href="tel:+919000000000" class="hover:text-white transition-colors">+91 90000 00000</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-700 mt-8 pt-6 text-sm text-gray-400">© <span id="footer-year-services"></span> Sphurit Technologies Pvt Ltd. All rights reserved.</div>
+  <footer class="hero-gradient text-black font-bold">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="grid md:grid-cols-4 gap-8 items-start">
+      
+      <!-- Logo + About -->
+      <div class="md:col-span-2">
+        <div class="flex items-center mb-3">
+          <a href="index.html" aria-label="Sphurit home">
+            <img src="/public/assets/Sphurit Logo.png" 
+                 alt="Sphurit Logo" 
+                 class="h-[250px] w-auto object-contain">
+          </a>
         </div>
-    </footer>
+        <p class="text-sm leading-relaxed max-w-md -mt-20">
+          <span class="text-[#e25101] font-semibold">Sphurit Technologies</span> is a strategy-first 
+          digital growth partner based in Pune, India. We empower businesses with 
+          <span class="text-[#e25101] font-semibold">performance-driven marketing</span>, creative design, and technology solutions to help them grow sustainably.
+        </p>
+
+        <div class="flex gap-3 mt-3">
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/company/sphurit/" target="_blank" class="w-8 h-8 rounded-full bg-[#e25101] flex items-center justify-center hover:bg-opacity-80 transition-colors">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+          </a>
+
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/sphurit" target="_blank" class="w-8 h-8 rounded-full bg-[#e25101] flex items-center justify-center hover:bg-opacity-80 transition-colors">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/>
+              <circle cx="12" cy="12" r="3.5"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-base font-semibold mb-2 text-[#e25101]">Quick Links</h3>
+        <ul class="space-y-1 text-m">
+          <li><a href="index.html" class="hover:text-[#e25101] transition">Home</a></li>
+          <li><a href="about.html" class="hover:text-[#e25101] transition">About Us</a></li>
+          <li><a href="services.html" class="hover:text-[#e25101] transition">Services</a></li>
+          <li><a href="portfolio.html" class="hover:text-[#e25101] transition">Portfolio</a></li>
+          <li><a href="contact.html" class="hover:text-[#e25101] transition">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div>
+        <h3 class="text-base font-semibold mb-2 text-[#e25101]">Contact Info</h3>
+        <ul class="space-y-1 text-sm">
+          <li>📧 info@sphurit.com</li>
+          <li>📞 +91 79720 45584</li>
+          <li>📍 Pune, India</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-gray-700 mt-6 pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+      <div>© <span id="footer-year"></span> Sphurit Technologies Pvt Ltd. All rights reserved.</div>
+      <div class="flex items-center gap-4">
+        <a href="#" class="hover:text-[#e25101] transition">Privacy Policy</a>
+        <a href="#" class="hover:text-[#e25101] transition">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    // guard to avoid errors if span is missing
+    const fy = document.getElementById('footer-year');
+    if (fy) fy.innerText = new Date().getFullYear();
+  </script>
+</footer>
 
     <!-- Enquiry Modal -->
     <div id="enquiry-modal" class="fixed inset-0 hidden items-center justify-center bg-black/60 z-50 p-4 transition-opacity duration-300 opacity-0" role="dialog">
@@ -415,101 +434,205 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function(){
-        // --- Data for Dynamic Content ---
-        const serviceData = {
-            cards: [
-                { title: "Website Development & UX", icon: "💻", color: "from-blue-500 to-blue-600", details: "<h4>Includes:</h4><ul><li>Static & Dynamic Websites</li><li>Custom-coded Solutions</li><li>WordPress & CMS Builds</li><li>E-commerce Platforms</li></ul>" },
-                { title: "Graphic Design & Branding", icon: "🎨", color: "from-purple-500 to-purple-600", details: "<h4>Includes:</h4><ul><li>Logo & Identity Design</li><li>Marketing Collateral</li><li>UI/UX for Apps</li><li>Brand Style Guides</li></ul>" },
-                { title: "Content & Scripting", icon: "✍️", color: "from-green-500 to-green-600", details: "<h4>Includes:</h4><ul><li>SEO Content Strategy</li><li>Blog & Article Writing</li><li>Video Scripting</li><li>Ad Copywriting</li></ul>" },
-                { title: "Growth & Performance Marketing", icon: "📊", color: "from-red-500 to-red-600", details: "<h4>Includes:</h4><ul><li>PPC (Google, Meta)</li><li>Conversion Rate Optimization</li><li>Funnel Building</li><li>Analytics & Reporting</li></ul>" },
-                { title: "Video Production & Editing", icon: "🎥", color: "from-indigo-500 to-indigo-600", details: "<h4>Includes:</h4><ul><li>Corporate Videos</li><li>Social Media Ads</li><li>2D/3D Animation</li><li>Post-Production</li></ul>" },
-                { title: "SEO Services", icon: "🔎", color: "from-yellow-500 to-amber-600", details: "<h4>Includes:</h4><ul><li>Technical SEO Audits</li><li>On-Page & Off-Page SEO</li><li>Local SEO</li><li>Keyword Strategy</li></ul>" }
-            ],
-            deepDive: {
-                'web-dev': `<div class="grid md:grid-cols-2 gap-6 py-4"><_h4>Our Approach</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>User-centered design</li><li>Mobile-first & performance budget</li><li>Conversion optimization & A/B testing</li></ul></div><div><h4>Technologies</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>React / Next.js / WordPress</li><li>Analytics & tracking (GA4, GTM)</li><li>Hosting & performance tuning</li></ul></div></div>`,
-                'marketing': `<div class="grid md:grid-cols-3 gap-6 py-4"><div><h4>Paid Ads</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Google, Meta, LinkedIn</li><li>YouTube & programmatic</li></ul></div><div><h4>Optimization</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Attribution & event architecture</li><li>CRO & funnels</li></ul></div><div><h4>Retainers</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Monthly media + creative</li><li>Reporting & dashboards</li></ul></div></div>`,
-                'seo': `<div class="grid md:grid-cols-2 gap-6 py-4"><div><h4>Core SEO</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Technical Site Audits</li><li>Keyword Research & Strategy</li><li>Content Gap Analysis</li></ul></div><div><h4>Authority Building</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Link Building & Outreach</li><li>Local SEO & GMB Optimization</li><li>Digital PR</li></ul></div></div>`,
-                'video': `<div class="grid md:grid-cols-2 gap-6 py-4"><div><h4>Production</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Concept & Scriptwriting</li><li>On-site Filming</li><li>Drone & Aerial Footage</li></ul></div><div><h4>Post-Production</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Editing & Color Grading</li><li>Motion Graphics & Animation</li><li>Sound Design & Mixing</li></ul></div></div>`
-            }
-        };
-
-        // Populate Flip Cards
-        const servicesGrid = document.getElementById('services-grid');
-        if (servicesGrid) {
-            servicesGrid.innerHTML = serviceData.cards.map(card => `
-                <div class="flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r ${card.color} flex items-center justify-center text-white text-3xl">${card.icon}</div>
-                            <h3 class="text-xl font-bold">${card.title}</h3>
+        try {
+            // --- Data for Dynamic Content ---
+            const serviceData = {
+                cards: [
+                    { title: "Website Development & UX", icon: "💻", color: "from-blue-500 to-blue-600", details: "<h4 class='font-semibold mb-2'>Includes:</h4><ul><li>Static & Dynamic Websites</li><li>Custom-coded Solutions</li><li>WordPress & CMS Builds</li><li>E-commerce Platforms</li></ul>" },
+                    { title: "Graphic Design & Branding", icon: "🎨", color: "from-purple-500 to-purple-600", details: "<h4 class='font-semibold mb-2'>Includes:</h4><ul><li>Logo & Identity Design</li><li>Marketing Collateral</li><li>UI/UX for Apps</li><li>Brand Style Guides</li></ul>" },
+                    { title: "Content & Scripting", icon: "✍️", color: "from-green-500 to-green-600", details: "<h4 class='font-semibold mb-2'>Includes:</h4><ul><li>SEO Content Strategy</li><li>Blog & Article Writing</li><li>Video Scripting</li><li>Ad Copywriting</li></ul>" },
+                    { title: "Growth & Performance Marketing", icon: "📊", color: "from-red-500 to-red-600", details: "<h4 class='font-semibold mb-2'>Includes:</h4><ul><li>PPC (Google, Meta)</li><li>Conversion Rate Optimization</li><li>Funnel Building</li><li>Analytics & Reporting</li></ul>" },
+                    { title: "Video Production & Editing", icon: "🎥", color: "from-indigo-500 to-indigo-600", details: "<h4 class='font-semibold mb-2'>Includes:</h4><ul><li>Corporate Videos</li><li>Social Media Ads</li><li>2D/3D Animation</li><li>Post-Production</li></ul>" },
+                    { title: "SEO Services", icon: "🔎", color: "from-yellow-500 to-amber-600", details: "<h4 class='font-semibold mb-2'>Includes:</h4><ul><li>Technical SEO Audits</li><li>On-Page & Off-Page SEO</li><li>Local SEO</li><li>Keyword Strategy</li></ul>" }
+                ],
+                deepDive: {
+                    'web-dev': `
+                      <div class="grid md:grid-cols-2 gap-6 py-4">
+                        <div>
+                          <h4 class="font-semibold mb-2 text-gray-800">Our Approach</h4>
+                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
+                            <li>User-centered design</li>
+                            <li>Mobile-first & performance budget</li>
+                            <li>Conversion optimization & A/B testing</li>
+                          </ul>
                         </div>
-                        <div class="flip-card-back">
-                            ${card.details}
+                        <div>
+                          <h4 class="font-semibold mb-2 text-gray-800">Technologies</h4>
+                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
+                            <li>React / Next.js / WordPress</li>
+                            <li>Analytics & tracking (GA4, GTM)</li>
+                            <li>Hosting & performance tuning</li>
+                          </ul>
+                        </div>
+                      </div>`,
+                    'marketing': `
+                      <div class="grid md:grid-cols-3 gap-6 py-4">
+                        <div>
+                          <h4 class="font-semibold mb-2 text-gray-800">Paid Ads</h4>
+                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
+                            <li>Google, Meta, LinkedIn</li>
+                            <li>YouTube & programmatic</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <h4 class="font-semibold mb-2 text-gray-800">Optimization</h4>
+                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
+                            <li>Attribution & event architecture</li>
+                            <li>CRO & funnels</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <h4 class="font-semibold mb-2 text-gray-800">Retainers</h4>
+                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
+                            <li>Monthly media + creative</li>
+                            <li>Reporting & dashboards</li>
+                          </ul>
+                        </div>
+                      </div>`,
+                    'seo': `
+                      <div class="grid md:grid-cols-2 gap-6 py-4">
+                        <div>
+                          <h4 class="font-semibold mb-2 text-gray-800">Core SEO</h4>
+                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
+                            <li>Technical Site Audits</li>
+                            <li>Keyword Research & Strategy</li>
+                            <li>Content Gap Analysis</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <h4 class="font-semibold mb-2 text-gray-800">Authority Building</h4>
+                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
+                            <li>Link Building & Outreach</li>
+                            <li>Local SEO & GMB Optimization</li>
+                            <li>Digital PR</li>
+                          </ul>
+                        </div>
+                      </div>`,
+                    'video': `
+                      <div class="grid md:grid-cols-2 gap-6 py-4">
+                        <div>
+                          <h4 class="font-semibold mb-2 text-gray-800">Production</h4>
+                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
+                            <li>Concept & Scriptwriting</li>
+                            <li>On-site Filming</li>
+                            <li>Drone & Aerial Footage</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <h4 class="font-semibold mb-2 text-gray-800">Post-Production</h4>
+                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
+                            <li>Editing & Color Grading</li>
+                            <li>Motion Graphics & Animation</li>
+                            <li>Sound Design & Mixing</li>
+                          </ul>
+                        </div>
+                      </div>`
+                }
+            };
+
+            // Populate Flip Cards
+            const servicesGrid = document.getElementById('services-grid');
+            if (servicesGrid) {
+                servicesGrid.innerHTML = serviceData.cards.map(card => `
+                    <div class="flip-card corner-border border border-gray-200 rounded-2xl">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r ${card.color} flex items-center justify-center text-white text-3xl">${card.icon}</div>
+                                <h3 class="text-xl font-bold">${card.title}</h3>
+                            </div>
+                            <div class="flip-card-back p-4">
+                                ${card.details}
+                            </div>
                         </div>
                     </div>
-                </div>
-            `).join('');
-        }
-
-        // Populate Deep Dive Sections
-        for (const [key, value] of Object.entries(serviceData.deepDive)) {
-            const el = document.getElementById(`${key}-content`);
-            if (el) el.innerHTML = value.replace(/<_h4>/g, '<h4 class="font-semibold mb-2 text-gray-800">');
-        }
-        
-        document.getElementById('footer-year-services').innerText = new Date().getFullYear();
-
-        const counterObserver = new IntersectionObserver((entries, obs)=>{
-            entries.forEach(entry=>{
-                if(entry.isIntersecting){
-                    const el = entry.target;
-                    const to = parseInt(el.dataset.counter || '0', 10);
-                    let start=0, duration=2000;
-                    const step = (timestamp) => {
-                        if (!start) start = timestamp;
-                        const progress = Math.min((timestamp - start) / duration, 1);
-                        el.textContent = Math.floor(progress * to).toLocaleString('en-IN');
-                        if (progress < 1) window.requestAnimationFrame(step);
-                    };
-                    window.requestAnimationFrame(step);
-                    obs.unobserve(el);
-                }
-            });
-        },{ threshold: 0.5 });
-        document.querySelectorAll('[data-counter]').forEach(el=>counterObserver.observe(el));
-
-        const scrollObserver = new IntersectionObserver((entries)=>{
-            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('animate'); });
-        },{ threshold: 0.12 });
-        document.querySelectorAll('.scroll-animate').forEach(el=>scrollObserver.observe(el));
-        
-        const flipCards = document.querySelectorAll('.flip-card');
-        flipCards.forEach(card => {
-            card.setAttribute('tabindex', '0');
-            card.addEventListener('click', () => card.classList.toggle('is-flipped'));
-            card.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('is-flipped'); }
-            });
-            if (window.matchMedia('(hover: hover)').matches) {
-                card.addEventListener('mouseenter', () => card.classList.add('is-flipped'));
-                card.addEventListener('mouseleave', () => card.classList.remove('is-flipped'));
+                `).join('');
             }
-        });
 
-        const cardGrid = document.getElementById('services-grid');
-        if (cardGrid && window.innerWidth < 768) {
-            const mobileCardObserver = new IntersectionObserver((entries, observer) => {
-                if(entries[0].isIntersecting) {
-                    let delay = 100;
-                    flipCards.forEach(card => {
-                        setTimeout(() => card.classList.add('is-flipped'), delay);
-                        setTimeout(() => card.classList.remove('is-flipped'), delay + 2000);
-                        delay += 200;
-                    });
-                    observer.unobserve(cardGrid);
+            // Populate Deep Dive Sections (guarded replace)
+            for (const [key, value] of Object.entries(serviceData.deepDive)) {
+                const el = document.getElementById(`${key}-content`);
+                if (el) el.innerHTML = value;
+            }
+
+            // avoid crash if element missing
+            const footerYearServicesEl = document.getElementById('footer-year-services');
+            if (footerYearServicesEl) footerYearServicesEl.innerText = new Date().getFullYear();
+
+            // Intersection-observer based counters, with safe fallbacks
+            const counterObserver = ('IntersectionObserver' in window) ? new IntersectionObserver((entries, obs)=>{
+                entries.forEach(entry=>{
+                    if(entry.isIntersecting){
+                        const el = entry.target;
+                        const to = parseInt(el.dataset.counter || '0', 10);
+                        let start=0, duration=2000;
+                        const step = (timestamp) => {
+                            if (!start) start = timestamp;
+                            const progress = Math.min((timestamp - start) / duration, 1);
+                            el.textContent = Math.floor(progress * to).toLocaleString('en-IN');
+                            if (progress < 1) window.requestAnimationFrame(step);
+                        };
+                        window.requestAnimationFrame(step);
+                        obs.unobserve(el);
+                    }
+                });
+            },{ threshold: 0.25 }) : null;
+
+            if (counterObserver) {
+                document.querySelectorAll('[data-counter]').forEach(el=>counterObserver.observe(el));
+            } else {
+                // Fallback: animate immediately
+                document.querySelectorAll('[data-counter]').forEach(el=>{
+                    const to = parseInt(el.dataset.counter || '0', 10);
+                    el.textContent = to.toLocaleString('en-IN');
+                });
+            }
+
+            // Scroll reveal
+            const scrollObserve = ('IntersectionObserver' in window) ? new IntersectionObserver((entries)=>{
+                entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('animate'); });
+            },{ threshold: 0.12 }) : null;
+            if (scrollObserve) document.querySelectorAll('.scroll-animate').forEach(el=>scrollObserve.observe(el));
+            else document.querySelectorAll('.scroll-animate').forEach(el=>el.classList.add('animate')); // fallback reveal
+
+            // Flip card interactivity
+            const flipCards = document.querySelectorAll('.flip-card');
+            flipCards.forEach(card => {
+                card.setAttribute('tabindex', '0');
+                card.addEventListener('click', () => card.classList.toggle('is-flipped'));
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('is-flipped'); }
+                });
+                if (window.matchMedia('(hover: hover)').matches) {
+                    card.addEventListener('mouseenter', () => card.classList.add('is-flipped'));
+                    card.addEventListener('mouseleave', () => card.classList.remove('is-flipped'));
                 }
-            }, { threshold: 0.2 });
-            mobileCardObserver.observe(cardGrid);
+            });
+
+            // Mobile entrance flip demo (only run if grid exists)
+            const cardGrid = document.getElementById('services-grid');
+            if (cardGrid && window.innerWidth < 768) {
+                const mobileCardObserver = ('IntersectionObserver' in window) ? new IntersectionObserver((entries, observer) => {
+                    if(entries[0] && entries[0].isIntersecting) {
+                        let delay = 100;
+                        flipCards.forEach(card => {
+                            setTimeout(() => card.classList.add('is-flipped'), delay);
+                            setTimeout(() => card.classList.remove('is-flipped'), delay + 2000);
+                            delay += 200;
+                        });
+                        observer.unobserve(cardGrid);
+                    }
+                }, { threshold: 0.2 }) : null;
+                if (mobileCardObserver) mobileCardObserver.observe(cardGrid);
+            }
+        } catch (err) {
+            // keep page functional — log for debugging
+            console.warn('services init error:', err);
+            // ensure critical UI visible
+            document.querySelectorAll('.scroll-animate').forEach(el=>el.classList.add('animate'));
+            document.querySelectorAll('[data-counter]').forEach(el => {
+                const to = parseInt(el.dataset.counter || '0', 10);
+                if(!Number.isNaN(to)) el.textContent = to.toLocaleString('en-IN');
+            });
         }
      });
 
@@ -523,8 +646,8 @@
         if(header) header.setAttribute('aria-expanded', String(isExpanded));
     }
 
-    function openEnquiryModal(){ const m=document.getElementById('enquiry-modal'); m.classList.remove('hidden','opacity-0'); m.querySelector('#modal-content').classList.remove('scale-95');}
-    function closeEnquiryModal(){ const m=document.getElementById('enquiry-modal'); m.classList.add('opacity-0'); m.querySelector('#modal-content').classList.add('scale-95'); setTimeout(()=>m.classList.add('hidden'),300);}
+    function openEnquiryModal(){ const m=document.getElementById('enquiry-modal'); if(!m) return; m.classList.remove('hidden','opacity-0'); const md=m.querySelector('#modal-content'); if(md) md.classList.remove('scale-95');}
+    function closeEnquiryModal(){ const m=document.getElementById('enquiry-modal'); if(!m) return; m.classList.add('opacity-0'); const md=m.querySelector('#modal-content'); if(md) md.classList.add('scale-95'); setTimeout(()=>m.classList.add('hidden'),300);}
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeEnquiryModal(); }});
     </script>
 </body>

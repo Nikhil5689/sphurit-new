@@ -1,417 +1,418 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Services — Sphurit Technologies</title>
-
-    <!-- Tailwind -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sphurit — Strategy First. Results Next.</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles for animations and typography */
+        :root {
+            --color-primary: #00598d;
+            --color-secondary: #e25101;
+        }
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Accent curved border (top-left & bottom-right) for hero cards */
+        .accent-corner {
+            position: relative;
+            overflow: visible;
+        }
+        .accent-corner::before,
+        .accent-corner::after {
+            content: "";
+            position: absolute;
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            pointer-events: none;
+            z-index: 2;
+        }
+        /* top-left curved accent */
+        .accent-corner::before {
+            top: -8px;
+            left: -8px;
+            background: linear-gradient(135deg, rgba(0,89,141,0.95), rgba(0,150,200,0.6));
+            box-shadow: 0 6px 20px rgba(0,89,141,0.08);
+            border-top-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            clip-path: ellipse(65% 65% at 20% 20%);
+        }
+        /* bottom-right curved accent */
+        .accent-corner::after {
+            bottom: -8px;
+            right: -8px;
+            background: linear-gradient(135deg, rgba(226,81,1,0.95), rgba(240,120,40,0.6));
+            box-shadow: 0 10px 30px rgba(226,81,1,0.06);
+            border-bottom-right-radius: 20px;
+            border-top-left-radius: 20px;
+            clip-path: ellipse(65% 65% at 80% 80%);
+        }
+        .accent-corner > * { position: relative; z-index: 3; }
 
-  <style>
-:root{ --accent:#00598d; --accent-2:#e25101; --muted:#6b7280; }
-body{
-  font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  color:#0f172a;
-  background-color:#f8fafc;
-  margin:0;
-  -webkit-text-size-adjust:100%;
+
+        /* Counter visual */
+        .count-lg { font-family: 'Inter', sans-serif; font-weight: 800; color: var(--color-primary); font-size: 2.25rem; line-height: 1; }
+        .count-sub { color: #264651; font-weight: 600; }
+
+        /* Offer countdown */
+        .offer-wrap { display: flex; gap: 1rem; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+        .offer-countdown { display: inline-grid; grid-auto-flow: column; gap: .6rem; align-items: center; }
+        .offer-countdown .unit { background: #fff; color: #0b2b3a; padding: 0.6rem .8rem; border-radius: 0.5rem; font-weight: 700; min-width: 56px; text-align: center; box-shadow: 0 8px 24px rgba(2, 48, 73, 0.06); }
+        .offer-tag { display: inline-block; background: linear-gradient(90deg, #e25101, #ff7b3d); color: #fff; padding: .5rem 1rem; border-radius: .75rem; font-weight: 800; }
+        .offer-cta { background: linear-gradient(90deg, #00598d, #0077b3); color: white; font-weight: 800; padding: .8rem 1.2rem; border-radius: .75rem; }
+
+        /* Facing Issues package card */
+        .package-card { border: 2px solid #e6eef5; background: linear-gradient(180deg,#fff,#f7fbff); padding:2rem; border-radius:1rem; max-width:900px; margin:0 auto; text-align:center; }
+        .corner-border {
+          position: relative;
+          border-radius: 1rem;
+          overflow: hidden;
+        }
+        .corner-border::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 40px;
+          height: 40px;
+          border-top: 4px solid #00598d;
+          border-left: 4px solid #00598d;
+          border-top-left-radius: 1rem;
+        }
+        .corner-border::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 40px;
+          height: 40px;
+          border-bottom: 4px solid #ff7a1a;
+          border-right: 4px solid #ff7a1a;
+          border-bottom-right-radius: 1rem;
+        }
+        .corner-border > * { position: relative; z-index: 2; }
+
+
+        @media (max-width: 420px) {
+            .offer-countdown .unit { min-width: 44px; padding: .45rem .6rem; }
+        }
+
+        /* Animations */
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            animation: marquee 40s linear infinite;
+        }
+        
+        .animate-text-reveal {
+            animation: textReveal 1s ease-out forwards;
+        }
+
+        @keyframes textReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Scroll animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero gradient background */
+        .hero-gradient {
+            background: linear-gradient(120deg, rgba(0, 89, 141, 0.12), rgba(0, 89, 141, 0.06));
+            position: relative;
+        }
+
+        /* Dotted background */
+        .dotted-bg {
+            background-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, .08) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+
+        /* 3D hover effects */
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.4s ease;
+        }
+        .card-3d:hover {
+            transform: perspective(1000px) rotateX(3deg) rotateY(-4deg) scale(1.02);
+        }
+
+        /* Navbar underline animation */
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-secondary);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Chips / scrolling bar */
+        .chip { transition: all 200ms ease; }
+        .chip:hover { border-color: var(--color-primary); box-shadow: 0 6px 20px rgba(0, 89, 141, 0.12); transform: translateY(-2px); }
+
+        /* Flip card */
+        .flip-card { perspective: 1000px; cursor: pointer; }
+        .flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        .flip-card.is-flipped .flip-inner { transform: rotateY(180deg); }
+        .flip-front, .flip-back {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            position: absolute;
+            inset: 0;
+            padding: 2rem;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .flip-front { background: linear-gradient(180deg, #ffffff, #fbfbfb); border: 1px solid #e6e6e6; }
+        .flip-back { background: linear-gradient(180deg, #f8fafc, #eef2ff); border: 1px solid rgba(0, 89, 141, 0.12); transform: rotateY(180deg); color: #0b2b3a; }
+
+        /* Brands marquee */
+        .brands-marquee { overflow: hidden; white-space: nowrap; }
+        .brands-track { display: inline-flex; gap: 2rem; align-items: center; padding: 1rem 0; }
+        .brand-item { display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 0.5rem 1rem; background: #fff; border-radius: 0.75rem; border: 1px solid #eee; transition: all 0.3s ease; }
+        .brand-item:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- Header -->
+   <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-lg border-b border-gray-200">
+  <div class="max-w-7xl mx-auto h-20 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2" aria-label="Sphurit home">
+      <img src="https://img.icons8.com/plasticine/100/s-symbol.png" class="h-10" alt="logo"/>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+      <a href="index.html" class="hover:text-[var(--accent-2)]">Home</a>
+      <a href="about.html" class="hover:text-[var(--accent-2)]">About Us</a>
+      <a href="services.html" class="text-[var(--accent-2)]">Services</a>
+      <a href="portfolio.html" class="hover:text-[var(--accent-2)]">Portfolio</a>
+      <a href="contact.html" class="hover:text-[var(--accent-2)]">Contact Us</a>
+    </nav>
+
+    <!-- Desktop CTA -->
+    <div class="hidden md:flex">
+      <button onclick="openEnquiryModal()" 
+              class="px-5 py-2.5 rounded-lg bg-[var(--accent-2)] text-white font-semibold hover:scale-105 transition-transform">
+        Enquire Now
+      </button>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button id="menu-btn" class="md:hidden p-2 border rounded-lg">☰</button>
+  </div>
+
+  <!-- Mobile Nav (hidden by default) -->
+  <nav id="mobile-nav" class="hidden flex-col gap-4 px-6 pb-6 bg-white border-t border-gray-200 md:hidden">
+    <a href="index.html" class="py-2 hover:text-[var(--accent-2)]">Home</a>
+    <a href="about.html" class="py-2 hover:text-[var(--accent-2)]">About Us</a>
+    <a href="services.html" class="py-2 text-[var(--accent-2)]">Services</a>
+    <a href="portfolio.html" class="py-2 hover:text-[var(--accent-2)]">Portfolio</a>
+    <a href="contact.html" class="py-2 hover:text-[var(--accent-2)]">Contact Us</a>
+    <button onclick="openEnquiryModal()" class="px-5 py-2.5 rounded-lg bg-[var(--accent-2)] text-white font-semibold">
+      Enquire Now
+    </button>
+  </nav>
+</header>
+
+
+    <main id="main">
+
+        <!-- Hero Section -->
+        <section class="hero-gradient relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 text-center relative z-10">
+                <p class="text-sm font-semibold tracking-wider text-gray-600 uppercase animate-text-reveal">Strategy first. Results next.</p>
+                <div id="rotating-banner" class="relative h-32 md:h-36 overflow-hidden my-6" aria-live="polite">
+                    <!-- Rotating lines will be injected here by JS -->
+                </div>
+                <p class="mt-6 text-lg text-gray-700 max-w-3xl mx-auto animate-text-reveal" style="animation-delay: 0.3s;">Most teams push ads before fixing the offer, funnel, or measurement. We do the opposite. Solve the right problem, then pour fuel.</p>
+                <div class="mt-12 grid grid-cols-2 md:grid-cols-3 gap-6 text-center max-w-4xl mx-auto border p-6 corner-border glass-card rounded-5xl overflow-hidden ">
+                    <div class="p-6 rounded-2xl bg-white/70 backdrop-blur-sm shadow-xl card-3d col-span-2 md:col-span-1  ">
+                        <div class="count-lg counter" data-counter="25000">0</div>
+                        <div class="text-sm count-sub mt-2">Qualified leads generated</div>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-white/70 backdrop-blur-sm shadow-xl card-3d col-span-2 md:col-span-1  ">
+                        <div class="count-lg counter" data-counter="42">0%</div>
+                        <div class="text-sm count-sub mt-2">Avg CPL reduction</div>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-white/70 backdrop-blur-sm shadow-xl card-3d  col-span-2 md:col-span-1 ">
+                        <div class="count-lg counter" data-counter="95">0%</div>
+                        <div class="text-sm count-sub mt-2">Web vitals score</div>
+                    </div>
+                </div>
+                <div class="mt-12 flex flex-wrap justify-center gap-4">
+                    <a href="contact.html" class="px-8 py-4 rounded-xl bg-[var(--color-secondary)] text-white font-semibold shadow-lg hover:bg-opacity-90 transform hover:-translate-y-1 transition-all">Book a Strategy Call</a>
+                    <a href="portfolio.html" class="px-8 py-4 rounded-xl border border-gray-300 bg-white font-semibold hover:border-[var(--color-secondary)] hover:text-[var(--color-secondary)] transform hover:-translate-y-1 transition-all shadow-md">See Our Work</a>
+                </div>
+            </div>
+            <!-- Enhanced Expertise Chips Marquee -->
+            <div class="relative overflow-hidden border-y border-gray-200 bg-white/60 backdrop-blur py-2" aria-label="Expertise">
+                <div id="chips-container" class="flex w-max   py-4 text-sm font-medium text-gray-700 animate-marquee ">
+                    <!-- Chip content will be injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- What's Blocking Your Growth Section -->
+        <section class="bg-white py-20 lg:py-28">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center scroll-animate ">
+                <h2 class="text-3xl sm:text-4xl font-bold">What's Blocking Your Growth?</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Pick your reality. We'll show the first fix, not a laundry list of services.</p>
+                <div id="problems-grid" class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-left glass-card rounded-2xl overflow-hidden corner-border border p-6 ">
+                    <!-- Problem cards will be injected here by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- What We Deliver Section -->
+        <section class="dotted-bg py-20 lg:py-28">
+             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center scroll-animate">
+                <h2 class="text-3xl sm:text-4xl font-bold">What We Deliver</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Targeted solutions designed for measurable impact and sustainable growth.</p>
+                <div id="solutions-grid" class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-left items-stretch border p-6 corner-border glass-card rounded-2xl overflow-hidden">
+                    <!-- Solution cards will be injected here by JS -->
+                </div>
+             </div>
+         </section>
+       
+        <!-- Performance Marketing Results -->
+        <section class="py-20 lg:py-28 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-animate">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-black mb-4">Performance Marketing Results</h2>
+                    <p class="text-lg text-gray-600">Real numbers from real campaigns.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 border p-6 corner-border glass-card rounded-2xl overflow-hidden">
+                    <div class="card-3d border border-gray-200 bg-white p-8 text-center shadow-lg rounded-2xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-3xl font-bold text-[var(--color-primary)] mb-2 counter" data-counter="2500000">0</div>
+                        <div class="text-gray-600 font-semibold">Total Reach</div>
+                    </div>
+                    <div class="card-3d border border-gray-200 bg-white p-8 text-center shadow-lg rounded-2xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-3xl font-bold text-[var(--color-primary)] mb-2 counter" data-counter="15000">0</div>
+                        <div class="text-gray-600 font-semibold">Quality Leads</div>
+                    </div>
+                    <div class="card-3d border border-gray-200 bg-white p-8 text-center shadow-lg rounded-2xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-3xl font-bold text-[var(--color-primary)] mb-2 counter" data-counter="850">0+</div>
+                        <div class="text-gray-600 font-semibold">High-Value Conversions</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+     <!-- Brands We Handle -->
+<section class="py-16 bg-white scroll-animate">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-black mb-4">Brands We Handle</h2>
+      <p class="text-lg text-gray-600">Trusted by industry leaders across sectors.</p>
+    </div>
+
+    <!-- Marquee wrapper -->
+    <div class="overflow-hidden relative">
+      <div id="brands-track" class="flex gap-6 animate-marquee whitespace-nowrap border p-6 corner-border glass-card rounded-2xl overflow-hidden">
+        
+        <!-- Sample Brand Cards -->
+      
+    </div>
+  </div>
+</section>
+
+<style>
+@keyframes marquee {
+  0%   { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
 }
-
-/* Headings */
-h1,h2,h3,h4{ font-family:'Inter',sans-serif; font-weight:700; }
-.font-serif { font-family:'Playfair Display','Inter',serif; }
-
-/* Hero gradient utility */
-.hero-gradient{ background: linear-gradient(120deg, rgba(0,89,141,0.10), rgba(0,89,141,0.04)); }
-
-/* Accent corner decorations */
-.accent-corner{ position:relative; overflow:visible; }
-.accent-corner::before,
-.accent-corner::after {
-  content: "";
-  position: absolute;
-  width:48px;
-  height:48px;
-  pointer-events:none;
-  z-index:3;
-  background:transparent;
-}
-.accent-corner::before {
-  top:-8px;
-  left:-8px;
-  border-top:5px solid var(--accent);
-  border-left:5px solid var(--accent);
-  border-top-left-radius:10px;
-}
-.accent-corner::after {
-  bottom:-8px;
-  right:-8px;
-  border-bottom:5px solid var(--accent-2);
-  border-right:5px solid var(--accent-2);
-  border-bottom-right-radius:10px;
-}
-
-/* Flip Card Styles */
-.flip-card {
-  perspective: 1500px;
-  cursor: pointer;
-  min-height: 260px;
-  -webkit-tap-highlight-color: transparent;
-}
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.flip-card.is-flipped .flip-card-inner { transform: rotateY(180deg); }
-
-.flip-card-front,
-.flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
+.animate-marquee {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  text-align: center;
-  box-sizing: border-box;
-}
-.flip-card-front {
-  background: linear-gradient(180deg, #fff, #f7fbff);
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 10px 25px rgba(2,48,73,0.05);
-}
-.flip-card-back {
-  background: linear-gradient(145deg, var(--accent), #004a75);
-  color: white;
-  transform: rotateY(180deg);
-  box-shadow: 0 10px 25px rgba(2,48,73,0.1);
-  text-align: left;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-.flip-card-back ul { list-style-type: disc; padding-left: 1.5rem; font-size: 0.875rem; line-height: 1.5; }
-
-/* Glass-card with gradient border (compatible mask fallback) */
-.glass-card {
-  position: relative;           /* needed for ::before */
-  isolation: isolate;           /* prevents mask/gradient bleed */
-  border-radius: 1rem;
-  background: rgba(255,255,255,0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.2);
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-/* Use a masked pseudo-element to show the gradient border
-   Standard + WebKit fallbacks included for best compatibility */
-.glass-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px; /* thickness of the gradient border */
-  pointer-events: none;
-  /* background gradient for the border */
-  background: linear-gradient(120deg, var(--accent), var(--accent-2));
-
-  /* Standard mask (Firefox and modern browsers) */
-  mask: 
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-
-  /* WebKit mask fallback (Chrome / Safari) */
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: destination-out;
-}
-
-/* Collapsible service expand animation */
-.service-expand {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height .5s cubic-bezier(.2,.9,.2,1), padding .5s, opacity .3s;
-  padding: 0 1.5rem;
-  opacity: 0;
-}
-.service-expand.expanded {
-  max-height: 1200px;
-  padding: 0.5rem 1.5rem 1.5rem;
-  opacity: 1;
-}
-.toggle-icon { transition: transform .28s ease; }
-
-/* Process Section Styles */
-.process-step { position: relative; }
-.process-step:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  top: 2.5rem;
-  right: -1.5rem; /* Half of gap */
-  width: 1.5rem;
-  height: 2px;
-  background-color: #cbd5e1;
-}
-@media (max-width: 767px) {
-  .process-step:not(:last-child)::after {
-    top: auto;
-    bottom: -1.5rem; /* Half of gap */
-    left: 50%;
-    right: auto;
-    width: 2px;
-    height: 1.5rem;
-    transform: translateX(-50%);
-  }
-}
-
-/* Scroll reveal */
-.scroll-animate { opacity:0; transform: translateY(20px); transition: all .6s ease; }
-.scroll-animate.animate { opacity:1; transform: none; }
-
-/* Counter card */
-.counter-card {
-  background: rgba(255,255,255,0.9);
-  border: 0.5px solid rgba(2,48,73,0.04);
-  padding: 1rem;
-  border-radius: .75rem;
-  text-align: center;
-  width: 180px;
-  flex-shrink: 0;
-  box-sizing: border-box;
-}
-.count-lg {
-  font-family: 'Playfair Display','Inter',serif;
-  font-weight: 800;
-  color: var(--accent);
-  font-size: 1.4rem;
-}
-
-/* Corner border helper */
-.corner-border {
-  position: relative;
-  border-radius: 1rem;
-  overflow: hidden;
-}
-.corner-border::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 40px;
-  border-top: 4px solid #00598d;
-  border-left: 4px solid #00598d;
-  border-top-left-radius: 1rem;
-}
-.corner-border::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 40px;
-  height: 40px;
-  border-bottom: 4px solid #ff7a1a;
-  border-right: 4px solid #ff7a1a;
-  border-bottom-right-radius: 1rem;
-}
-.corner-border > * { position: relative; z-index: 2; }
-
-/* Accessibility: reduce motion fallback */
-@media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; animation: none !important; }
+  animation: marquee 20s linear infinite;
 }
 </style>
 
-</head>
-<body class="bg-gray-50 text-gray-800">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-lg border-b border-gray-200">
-        <div class="max-w-7xl mx-auto h-20 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-2" aria-label="Sphurit home"><img src="https://img.icons8.com/plasticine/100/s-symbol.png" class="h-10" alt="logo"/></a>
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
-                <a href="index.html" class="nav-link hover:text-[var(--accent-2)] transition-colors">Home</a>
-                <a href="about.html" class="nav-link hover:text-[var(--accent-2)] transition-colors">About Us</a>
-                <a href="services.html" class="nav-link text-[var(--accent-2)]">Services</a>
-                <a href="portfolio.html" class="nav-link hover:text-[var(--accent-2)] transition-colors">Portfolio</a>
-                <a href="contact.html" class="nav-link hover:text-[var(--accent-2)] transition-colors">Contact Us</a>
-            </nav>
-            <div class="hidden md:flex"><button onclick="openEnquiryModal()" class="px-5 py-2.5 rounded-lg bg-[var(--accent-2)] text-white font-semibold transform hover:scale-105 transition-transform">Enquire Now</button></div>
-            <button id="menu-btn" class="md:hidden p-2 border rounded-lg">☰</button>
-        </div>
-    </header>
-
-    <main>
-        <!-- Hero -->
-        <section class="hero-gradient">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 text-center">
-                <p class="text-sm font-semibold tracking-wider text-gray-600 uppercase">Our Services</p>
-                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mt-4">Comprehensive Services for Measurable Growth</h1>
-                <p class="mt-6 text-lg text-gray-700 max-w-3xl mx-auto">Strategy-first marketing, creative, and technical execution that converts.</p>
-
-                <div class="hero-counters mt-8 flex flex-wrap justify-center gap-4 ">
-                    <div class="counter-card corner-border">
-                        <div class="count-lg font-serif " data-counter="150">0</div>
-                        <div class="text-sm text-gray-500">Projects Delivered</div>
-                    </div>
-                    <div class="counter-card corner-border">
-                        <div class="count-lg font-serif" data-counter="2500000">0</div>
-                        <div class="text-sm text-gray-500">Total Reach</div>
-                    </div>
-                    <div class="counter-card corner-border">
-                        <div class="count-lg font-serif" data-counter="15000">0</div>
-                        <div class="text-sm text-gray-500">Quality Leads</div>
-                    </div>
-                </div>
+        <!-- Industries We Serve Section -->
+        <section class="bg-gray-50 py-20 lg:py-28">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center scroll-animate">
+                <h2 class="text-3xl sm:text-4xl font-bold">Industries We Serve</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Specialized expertise across diverse sectors with proven growth strategies.</p>
+                <div id="industries-grid" class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-left border p-6 corner-border glass-card rounded-2xl overflow-hidden">
+                    <!-- Industry Cards will be injected by JS -->
+                 </div>
             </div>
         </section>
+        
+        <!-- Facing Issues with SEO/Growth Section (formerly Thinking Tank) -->
+        <section class="bg-[#e25101] text-white scroll-animate">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+                <div class="text-center">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-6">Facing Issues with SEO/Growth?</h2>
+                    <p class="mb-2 text-lg text-orange-100">Limited-time launch offer — complete fast-start growth bundle.</p>
+                    <div class="package-card corner-border">
+                        <div class="text-4xl font-extrabold mb-2">₹49,999/-</div>
+                        <div class="font-semibold mb-3">One-off package — includes a 5-page responsive website + SEO + Company profile video + Pitch deck + 1-month social media strategy calendar</div>
+                        <p class="text-sm text-gray-600 mb-4">Delivered with a launch playbook, measurement setup and handover assets. Fast turnaround with strategy baked in.</p>
 
-        <!-- Services Grid (flip-cards) -->
-        <section class="bg-gray-50 scroll-animate">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold mb-2">What We Do</h2>
-                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Hover or click to see what's included. Expand the sections below for a deep dive.</p>
-                </div>
-
-                <div id="services-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 corner-border  p-6">
-                    <!-- Cards will be injected by JS -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Our Process Section -->
-        <section class="bg-white py-16 lg:py-20 scroll-animate">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold mb-2">Our Path to Your Success</h2>
-                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">A transparent, collaborative process designed for results.</p>
-                </div>
-                <div class="flex flex-col md:flex-row justify-center items-start md:items-center gap-12 md:gap-6">
-                    <div class="process-step text-center flex flex-col items-center">
-                        <div class="w-20 h-20 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-3xl mb-4 border-4 border-white shadow-lg">1</div>
-                        <h3 class="font-bold text-lg">Analyze & Discover</h3>
-                        <p class="text-sm text-gray-600 max-w-xs">We dive deep into your brand, market, and goals.</p>
-                    </div>
-                    <div class="process-step text-center flex flex-col items-center">
-                        <div class="w-20 h-20 rounded-full bg-red-100 text-red-700 flex items-center justify-center text-3xl mb-4 border-4 border-white shadow-lg">2</div>
-                        <h3 class="font-bold text-lg">Strategize & Plan</h3>
-                        <p class="text-sm text-gray-600 max-w-xs">We craft a data-driven roadmap for success.</p>
-                    </div>
-                    <div class="process-step text-center flex flex-col items-center">
-                        <div class="w-20 h-20 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-3xl mb-4 border-4 border-white shadow-lg">3</div>
-                        <h3 class="font-bold text-lg">Execute & Create</h3>
-                        <p class="text-sm text-gray-600 max-w-xs">Our team brings the strategy to life with precision.</p>
-                    </div>
-                    <div class="process-step text-center flex flex-col items-center">
-                        <div class="w-20 h-20 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center text-3xl mb-4 border-4 border-white shadow-lg">4</div>
-                        <h3 class="font-bold text-lg">Optimize & Grow</h3>
-                        <p class="text-sm text-gray-600 max-w-xs">We analyze results and continuously improve for growth.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Service Deep Dive (collapsibles) -->
-        <section class="bg-gray-50 scroll-animate">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold">Service Deep Dive</h2>
-                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Click to expand details for each service category.</p>
-                </div>
-
-                <div class="space-y-6">
-                    <!-- Web Dev deep dive -->
-                    <div class="glass-card rounded-2xl overflow-hidden">
-                        <div class="p-6 cursor-pointer flex items-start justify-between" role="button" aria-controls="web-dev-content" aria-expanded="false" onclick="toggleService('web-dev')">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center text-white shrink-0">💻</div>
-                                <div><h3 class="text-2xl font-bold">Website Development & UX</h3></div>
+                        <div class="offer-wrap">
+                            <span class="offer-tag">Launch Offer</span>
+                            <div class="offer-countdown" id="offer-countdown" aria-live="polite">
+                                <div class="unit"><span id="cd-days">00</span><div class="text-xs">D</div></div>
+                                <div class="unit"><span id="cd-hours">00</span><div class="text-xs">H</div></div>
+                                <div class="unit"><span id="cd-mins">00</span><div class="text-xs">M</div></div>
+                                <div class="unit"><span id="cd-secs">00</span><div class="text-xs">S</div></div>
                             </div>
-                            <svg id="web-dev-icon" class="w-6 h-6 toggle-icon text-gray-500 shrink-0 mt-2" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                         </div>
-                        <div id="web-dev-content" class="service-expand">
-                            <!-- injected by JS -->
-                        </div>
-                    </div>
 
-                    <!-- Marketing deep dive -->
-                    <div class="glass-card rounded-2xl overflow-hidden">
-                        <div class="p-6 cursor-pointer flex items-start justify-between" role="button" aria-controls="marketing-content" aria-expanded="false" onclick="toggleService('marketing')">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center text-white shrink-0">📊</div>
-                                <div><h3 class="text-2xl font-bold">Growth & Performance Marketing</h3></div>
-                            </div>
-                            <svg id="marketing-icon" class="w-6 h-6 toggle-icon text-gray-500 shrink-0 mt-2" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        <div class="mt-6 flex items-center justify-center gap-4 flex-wrap">
+                            <a href="contact.html" class="offer-cta transition-transform hover:scale-105">Claim ₹49,999 Offer</a>
+                            <a href="contact.html" class="inline-block bg-white text-[#e25101] font-bold px-4 py-2 rounded-lg transition-transform hover:scale-105">Book a Call</a>
                         </div>
-                        <div id="marketing-content" class="service-expand">
-                            <!-- injected by JS -->
-                        </div>
-                    </div>
-                    
-                     <!-- SEO deep dive -->
-                    <div class="glass-card rounded-2xl overflow-hidden">
-                        <div class="p-6 cursor-pointer flex items-start justify-between" role="button" aria-controls="seo-content" aria-expanded="false" onclick="toggleService('seo')">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-yellow-500 to-amber-600 flex items-center justify-center text-white shrink-0">🔎</div>
-                                <div><h3 class="text-2xl font-bold">SEO Services</h3></div>
-                            </div>
-                            <svg id="seo-icon" class="w-6 h-6 toggle-icon text-gray-500 shrink-0 mt-2" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                        </div>
-                        <div id="seo-content" class="service-expand">
-                             <!-- injected by JS -->
-                        </div>
-                    </div>
-
-                    <!-- Video deep dive -->
-                    <div class="glass-card rounded-2xl overflow-hidden">
-                        <div class="p-6 cursor-pointer flex items-start justify-between" role="button" aria-controls="video-content" aria-expanded="false" onclick="toggleService('video')">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-600 flex items-center justify-center text-white shrink-0">🎥</div>
-                                <div><h3 class="text-2xl font-bold">Video Production & Editing</h3></div>
-                            </div>
-                            <svg id="video-icon" class="w-6 h-6 toggle-icon text-gray-500 shrink-0 mt-2" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                        </div>
-                        <div id="video-content" class="service-expand">
-                           <!-- injected by JS -->
-                        </div>
+                        <p class="text-xs text-gray-700 mt-3">Offer valid while slots last. Typical delivery: 3-4 weeks for full pack depending on approvals.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CTA -->
-        <section class="py-16 bg-gradient-to-r from-[var(--accent-2)] to-[#ff8b4a]">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-                <h2 class="text-3xl sm:text-4xl font-bold mb-4">Ready to Transform Your Marketing?</h2>
-                <p class="text-lg mb-6">Get a free consultation and a strategic roadmap.</p>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <button onclick="openEnquiryModal()" class="px-6 py-3 rounded-xl bg-white text-[var(--accent-2)] font-bold transform hover:scale-105 transition-transform">Get Free Consultation</button>
-                    <a href="portfolio.html" class="px-6 py-3 rounded-xl border-2 border-white text-white font-bold transform hover:scale-105 transition-transform">View Our Work</a>
-                </div>
-            </div>
-        </section>
     </main>
 
     <!-- Footer -->
-     <footer class="hero-gradient text-black font-bold">
+ <footer class="hero-gradient text-black font-bold">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="grid md:grid-cols-4 gap-8 items-start">
       
@@ -421,10 +422,10 @@ h1,h2,h3,h4{ font-family:'Inter',sans-serif; font-weight:700; }
           <a href="index.html" aria-label="Sphurit home">
             <img src="/public/assets/Sphurit Logo.png" 
                  alt="Sphurit Logo" 
-                 class="h-[120px] w-auto object-contain mb:0">
+                 class="h-[250px] w-auto object-contain mb:0">
           </a>
         </div>
-      <p class="text-sm leading-relaxed max-w-md -mt-6">
+      <p class="text-sm leading-relaxed max-w-md -mt-20">
   <span class="text-[#e25101] font-semibold">Sphurit Technologies</span> is a strategy-first 
   digital growth partner based in Pune, India.  
   We empower businesses with <span class="text-[#e25101] font-semibold">performance-driven marketing</span>, 
@@ -450,7 +451,7 @@ h1,h2,h3,h4{ font-family:'Inter',sans-serif; font-weight:700; }
           </a>
 
           <!-- Instagram -->
-          <a href="https://www.instagram.com/sphurit" target="_blank"
+          <a href="https://www.instagram.com/sphurit?igsh=MTkyN2hrN3lzNmg0OA==" target="_blank"
              class="w-8 h-8 rounded-full bg-[#e25101] flex items-center justify-center hover:bg-opacity-80 transition-colors">
             <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2.163c3.204 0 3.584.012 
@@ -494,7 +495,7 @@ h1,h2,h3,h4{ font-family:'Inter',sans-serif; font-weight:700; }
 
     <!-- Bottom Bar -->
     <div class="border-t border-gray-700 mt-6 pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-      <div>© <span id="footer-year-services"></span> Sphurit Technologies Pvt Ltd. All rights reserved.</div>
+      <div>© 2025 Sphurit Technologies Pvt Ltd. All rights reserved.</div>
       <div class="flex items-center gap-4">
         <a href="#" class="hover:text-[#e25101] transition">Privacy Policy</a>
         <a href="#" class="hover:text-[#e25101] transition">Terms of Service</a>
@@ -503,159 +504,379 @@ h1,h2,h3,h4{ font-family:'Inter',sans-serif; font-weight:700; }
   </div>
 </footer>
 
+    <!-- Floating CTAs -->
+    <div class="fixed right-6 bottom-6 hidden md:grid gap-4 z-40">
+        <button id="enquire-btn-floating" aria-label="Enquire now" class="w-14 h-14 rounded-full grid place-items-center bg-[var(--color-secondary)] text-white shadow-xl hover:bg-opacity-90 transform hover:scale-110 transition-all">
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+        </button>
+    </div>
+
     <!-- Enquiry Modal -->
-    <div id="enquiry-modal" class="fixed inset-0 hidden items-center justify-center bg-black/60 z-50 p-4 transition-opacity duration-300 opacity-0" role="dialog">
-        <div id="modal-content" class="bg-white w-full max-w-lg rounded-2xl p-6 sm:p-8 shadow-2xl relative transform scale-95 transition-all duration-300">
-            <button aria-label="Close" onclick="closeEnquiryModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800">✕</button>
-            <h3 class="text-2xl font-bold text-center">Quick Enquiry</h3>
-            <form class="mt-6 grid gap-4" onsubmit="event.preventDefault(); closeEnquiryModal();">
-                <input required name="name" placeholder="Name" class="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-[var(--accent)]"/>
-                <input required type="email" name="email" placeholder="Email" class="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-[var(--accent)]"/>
-                <button class="w-full px-5 py-3 rounded-xl bg-[var(--accent-2)] text-white font-semibold transform hover:scale-105 transition-transform">Send Enquiry</button>
+    <div id="enquiry-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div id="modal-content" class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full relative transform scale-95 opacity-0 transition-all duration-300">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700" aria-label="Close modal">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 id="modal-title" class="text-2xl font-bold text-center mb-2">Let's Talk Growth</h2>
+            <p class="text-center text-gray-600 mb-6">Fill out the form and we'll be in touch shortly.</p>
+            <form action="#">
+                <div class="space-y-4">
+                    <input type="text" placeholder="Your Name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]">
+                    <input type="email" placeholder="Your Email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]">
+                    <textarea placeholder="Your Message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"></textarea>
+                    <button type="submit" class="w-full px-6 py-3 rounded-lg bg-[var(--color-secondary)] text-white font-semibold shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all">Submit Enquiry</button>
+                </div>
             </form>
         </div>
     </div>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function(){
-        // --- Data for Dynamic Content ---
-        const serviceData = {
-            cards: [
-                { title: "Website Development & UX", icon: "💻", color: "from-blue-500 to-blue-600", details: "<h4 class='font-semibold mb-2 text-gray-800'>Includes:</h4><ul><li>Static & Dynamic Websites</li><li>Custom-coded Solutions</li><li>WordPress & CMS Builds</li><li>E-commerce Platforms</li></ul>" },
-                { title: "Graphic Design & Branding", icon: "🎨", color: "from-purple-500 to-purple-600", details: "<h4 class='font-semibold mb-2 text-gray-800'>Includes:</h4><ul><li>Logo & Identity Design</li><li>Marketing Collateral</li><li>UI/UX for Apps</li><li>Brand Style Guides</li></ul>" },
-                { title: "Content & Scripting", icon: "✍️", color: "from-green-500 to-green-600", details: "<h4 class='font-semibold mb-2 text-gray-800'>Includes:</h4><ul><li>SEO Content Strategy</li><li>Blog & Article Writing</li><li>Video Scripting</li><li>Ad Copywriting</li></ul>" },
-                { title: "Growth & Performance Marketing", icon: "📊", color: "from-red-500 to-red-600", details: "<h4 class='font-semibold mb-2 text-gray-800'>Includes:</h4><ul><li>PPC (Google, Meta)</li><li>Conversion Rate Optimization</li><li>Funnel Building</li><li>Analytics & Reporting</li></ul>" },
-                { title: "Video Production & Editing", icon: "🎥", color: "from-indigo-500 to-indigo-600", details: "<h4 class='font-semibold mb-2 text-gray-800'>Includes:</h4><ul><li>Corporate Videos</li><li>Social Media Ads</li><li>2D/3D Animation</li><li>Post-Production</li></ul>" },
-                { title: "SEO Services", icon: "🔎", color: "from-yellow-500 to-amber-600", details: "<h4 class='font-semibold mb-2 text-gray-800'>Includes:</h4><ul><li>Technical SEO Audits</li><li>On-Page & Off-Page SEO</li><li>Local SEO</li><li>Keyword Strategy</li></ul>" }
-            ],
-            deepDive: {
-                'web-dev': `<div class="grid md:grid-cols-2 gap-6 py-4"><div><h4 class="font-semibold mb-2 text-gray-800">Our Approach</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>User-centered design</li><li>Mobile-first & performance budget</li><li>Conversion optimization & A/B testing</li></ul></div><div><h4 class="font-semibold mb-2 text-gray-800">Technologies</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>React / Next.js / WordPress</li><li>Analytics & tracking (GA4, GTM)</li><li>Hosting & performance tuning</li></ul></div></div>`,
-                'marketing': `<div class="grid md:grid-cols-3 gap-6 py-4"><div><h4 class="font-semibold mb-2 text-gray-800">Paid Ads</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Google, Meta, LinkedIn</li><li>YouTube & programmatic</li></ul></div><div><h4 class="font-semibold mb-2 text-gray-800">Optimization</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Attribution & event architecture</li><li>CRO & funnels</li></ul></div><div><h4 class="font-semibold mb-2 text-gray-800">Retainers</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Monthly media + creative</li><li>Reporting & dashboards</li></ul></div></div>`,
-                'seo': `<div class="grid md:grid-cols-2 gap-6 py-4"><div><h4 class="font-semibold mb-2 text-gray-800">Core SEO</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Technical Site Audits</li><li>Keyword Research & Strategy</li><li>Content Gap Analysis</li></ul></div><div><h4 class="font-semibold mb-2 text-gray-800">Authority Building</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Link Building & Outreach</li><li>Local SEO & GMB Optimization</li><li>Digital PR</li></ul></div></div>`,
-                'video': `<div class="grid md:grid-cols-2 gap-6 py-4"><div><h4 class="font-semibold mb-2 text-gray-800">Production</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Concept & Scriptwriting</li><li>On-site Filming</li><li>Drone & Aerial Footage</li></ul></div><div><h4 class="font-semibold mb-2 text-gray-800">Post-Production</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Editing & Color Grading</li><li>Motion Graphics & Animation</li><li>Sound Design & Mixing</li></ul></div></div>`
-            }
-        };
 
-        // Populate Flip Cards
-        const servicesGrid = document.getElementById('services-grid');
-        if (servicesGrid) {
-            servicesGrid.innerHTML = serviceData.cards.map(card => `
-                <div class="flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r ${card.color} flex items-center justify-center text-white text-3xl">${card.icon}</div>
-                            <h3 class="text-xl font-bold">${card.title}</h3>
-                        </div>
-                        <div class="flip-card-back">
-                            ${card.details}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    // --- Data for Dynamic Content ---
+    const AppData = {
+        rotatingHeadlines: [
+            "We Build Growth Engines.",
+            "Data-Driven Marketing.",
+            "Creative That Converts.",
+            "Strategy Before Tactics."
+        ],
+        expertiseChips: [
+            { text: 'PPC Ads', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>`},
+            { text: 'Social Media Ads', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>`},
+            { text: 'Content Marketing', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>`},
+            { text: 'CRO', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7r, 8 8-8 8-4-4-6 6" /></svg>`},
+            { text: 'Web Analytics', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>`},
+        ],
+        growthProblems: [
+            {
+                title: "Poor Lead Quality",
+                description: "Getting traffic but leads aren't converting to sales? Your targeting or offer might be off.",
+                solution: "We'll audit your funnel, refine audience targeting, and A/B test your offer to attract high-intent prospects."
+            },
+            {
+                title: "High Ad Spend, Low ROI",
+                description: "Pouring money into ads without seeing a return? It's a common path to burning cash.",
+                solution: "We implement rigorous tracking, optimize campaigns for conversions (not just clicks), and cut wasteful spending."
+            },
+            {
+                title: "Stagnant Organic Traffic",
+                description: "Your website isn't ranking, and you're invisible on Google? You're missing out on your best customers.",
+                solution: "Our SEO approach focuses on technical health, quality content, and authority building to achieve long-term rankings."
+            }
+        ],
+        solutions: [
+            { title: "Growth Audit & Strategy", description: "A deep dive into your analytics, market, and funnel to create a clear, actionable growth roadmap." },
+            { title: "Performance Marketing", description: "Precision-targeted ad campaigns on Google, Meta, and LinkedIn designed for maximum ROI." },
+            { title: "SEO & Content Authority", description: "Comprehensive SEO and content strategies that build lasting organic traffic and establish you as a market leader." }
+        ],
+        brands: [
+            "MetalCorp", "Residency", "StartupFlow", "TechVision", "InnovateCorp", "GrowthLab"
+        ],
+        industries: [
+            { 
+                title: "Manufacturing", 
+                description: "Industrial equipment, steel, automotive, and heavy machinery companies looking to modernize their marketing approach.",
+                points: ["B2B lead generation", "Trade show amplification", "Technical content marketing"],
+                icon: `<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>`,
+                color: "from-gray-600 to-gray-800"
+            },
+            { 
+                title: "Real Estate", 
+                description: "Residential, commercial, and luxury property developers seeking qualified leads and faster sales cycles.",
+                points: ["Pre-launch campaigns", "Virtual tours & videos", "Lead scoring systems"],
+                icon: `<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>`,
+                color: "from-blue-500 to-blue-700"
+            },
+            { 
+                title: "Startups", 
+                description: "SaaS, D2C, and service-based startups needing rapid growth and market validation strategies.",
+                points: ["Product-market fit validation", "Growth hacking strategies", "Investor-ready metrics"],
+                icon: `<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>`,
+                color: "from-green-500 to-green-700"
+            },
+            { 
+                title: "D2C Brands", 
+                description: "Direct-to-consumer brands looking to scale their online presence and customer acquisition.",
+                points: ["E-commerce optimization", "Social commerce strategies", "Customer retention campaigns"],
+                icon: `<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>`,
+                color: "from-purple-500 to-purple-700"
+            },
+            { 
+                title: "Education", 
+                description: "Educational institutions and EdTech companies seeking student acquisition and engagement.",
+                points: ["Student recruitment campaigns", "Course promotion strategies", "Alumni engagement programs"],
+                icon: `<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222 4 2.222V20M1 12v7a2 2 0 002 2h18a2 2 0 002-2v-7"></path></svg>`,
+                color: "from-red-500 to-red-700"
+            },
+            { 
+                title: "Healthcare", 
+                description: "Clinics, hospitals, and med-tech companies aiming to connect with patients and professionals.",
+                points: ["Patient acquisition funnels", "Telemedicine marketing", "Medical content authority"],
+                icon: `<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>`,
+                color: "from-teal-500 to-cyan-600"
+            },
+        ],
+    };
+
+    // --- Core Application Logic ---
+    const App = {
+        init() {
+            this.populateContent();
+            this.initMobileMenu();
+            this.initRotatingBanner();
+            this.initOfferCountdown();
+            this.initFlipCards();
+            this.initModal();
+            this.initScrollAnimations();
+            this.initCounters();
+            this.updateFooterYear();
+        },
+
+        populateContent() {
+            // Expertise Chips
+            const chipsContainer = document.getElementById('chips-container');
+            if(chipsContainer) {
+                const chipsHtml = [...AppData.expertiseChips, ...AppData.expertiseChips].map(chip => 
+                    `<div class="chip flex items-center gap-3 bg-white rounded-full border border-gray-200 px-4 py-2 shadow-sm cursor-pointer">
+                        <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">${chip.icon}</div>
+                        <span class="font-medium text-gray-700">${chip.text}</span>
+                    </div>`
+                ).join('');
+                chipsContainer.innerHTML = `<div class="flex items-center gap-4 px-4">${chipsHtml}</div>`;
+            }
+
+            // Growth Problems
+            const problemsGrid = document.getElementById('problems-grid');
+            if(problemsGrid) {
+                problemsGrid.innerHTML = AppData.growthProblems.map(p => `
+                    <div class="flip-card h-80">
+                        <div class="flip-inner rounded-xl shadow-lg">
+                            <div class="flip-front">
+                                <h3 class="text-2xl font-bold mb-3">${p.title}</h3>
+                                <p class="text-gray-600">${p.description}</p>
+                                <span class="mt-auto text-sm font-semibold text-[var(--color-primary)]">Click to see the fix &rarr;</span>
+                            </div>
+                            <div class="flip-back">
+                                <h3 class="text-xl font-bold mb-3">The First Fix:</h3>
+                                <p>${p.solution}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `).join('');
-        }
-
-        // Populate Deep Dive Sections safely
-        for (const [key, value] of Object.entries(serviceData.deepDive)) {
-            const el = document.getElementById(`${key}-content`);
-            if (el && typeof value === 'string') {
-                el.innerHTML = value;
+                `).join('');
             }
-        }
 
-        // Update footer year safely
-        const fy = document.getElementById('footer-year-services');
-        if (fy) fy.innerText = new Date().getFullYear();
+            // Solutions
+            const solutionsGrid = document.getElementById('solutions-grid');
+            if (solutionsGrid) {
+                solutionsGrid.innerHTML = AppData.solutions.map(s => `
+                    <div class="border border-gray-200 rounded-2xl bg-white p-8 h-full flex flex-col shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <h3 class="text-xl font-bold mb-3">${s.title}</h3>
+                        <p class="text-gray-600">${s.description}</p>
+                    </div>
+                `).join('');
+            }
 
-        // Counters (safe)
-        const counterObserver = new IntersectionObserver((entries, obs)=>{
-            entries.forEach(entry=>{
-                if(entry.isIntersecting){
-                    const el = entry.target;
-                    const to = parseInt(el.dataset.counter || '0', 10);
-                    let start=0, duration=2000;
-                    const step = (timestamp) => {
-                        if (!start) start = timestamp;
-                        const progress = Math.min((timestamp - start) / duration, 1);
-                        el.textContent = Math.floor(progress * to).toLocaleString('en-IN');
-                        if (progress < 1) window.requestAnimationFrame(step);
-                    };
-                    window.requestAnimationFrame(step);
-                    obs.unobserve(el);
-                }
+            // Brands
+            const brandsTrack = document.getElementById('brands-track');
+            if (brandsTrack) {
+                const brandsHtml = [...AppData.brands, ...AppData.brands].map(brand => `
+                    <div class="brand-item">
+                        <span class="text-xl font-bold text-[var(--color-primary)]">${brand.charAt(0)}</span>
+                        <span>${brand}</span>
+                    </div>
+                `).join('');
+                brandsTrack.innerHTML = brandsHtml;
+            }
+            
+            // Industries
+            const industriesGrid = document.getElementById('industries-grid');
+            if(industriesGrid) {
+                industriesGrid.innerHTML = AppData.industries.map(industry => `
+                    <div class="group p-8 rounded-2xl bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 card-3d border border-gray-200">
+                         <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r ${industry.color} flex items-center justify-center">
+                             ${industry.icon}
+                         </div>
+                         <h3 class="text-xl font-bold mb-3">${industry.title}</h3>
+                         <p class="text-gray-600 mb-4">${industry.description}</p>
+                         <ul class="text-sm text-gray-500 space-y-1 text-left">
+                             ${industry.points.map(p => `<li>• ${p}</li>`).join('')}
+                         </ul>
+                     </div>
+                `).join('');
+            }
+        },
+
+        initMobileMenu() {
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (!menuBtn || !mobileMenu) return;
+
+            menuBtn.addEventListener('click', () => {
+                const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+                menuBtn.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('hidden');
             });
-        },{ threshold: 0.5 });
-        document.querySelectorAll('[data-counter]').forEach(el=>counterObserver.observe(el));
-
-        // Scroll reveal
-        const scrollObserver = new IntersectionObserver((entries)=>{
-            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('animate'); });
-        },{ threshold: 0.12 });
-        document.querySelectorAll('.scroll-animate').forEach(el=>scrollObserver.observe(el));
+        },
         
-        // Flip cards interactions
-        const flipCards = document.querySelectorAll('.flip-card');
-        flipCards.forEach(card => {
-            card.setAttribute('tabindex', '0');
-            card.addEventListener('click', () => card.classList.toggle('is-flipped'));
-            card.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('is-flipped'); }
-            });
-            if (window.matchMedia('(hover: hover)').matches) {
-                card.addEventListener('mouseenter', () => card.classList.add('is-flipped'));
-                card.addEventListener('mouseleave', () => card.classList.remove('is-flipped'));
-            }
-        });
+        initRotatingBanner() {
+            const banner = document.getElementById('rotating-banner');
+            if (!banner || AppData.rotatingHeadlines.length === 0) return;
+            
+            let currentIndex = 0;
+            banner.style.fontFamily = "'Inter', sans-serif";
+            banner.style.fontWeight = '800';
+            banner.style.fontSize = 'clamp(2.5rem, 5vw, 3.5rem)';
 
-        // Mobile flip animation (safe)
-        const cardGrid = document.getElementById('services-grid');
-        if (cardGrid && window.innerWidth < 768 && flipCards.length) {
-            const mobileCardObserver = new IntersectionObserver((entries, observer) => {
-                if(entries[0].isIntersecting) {
-                    let delay = 100;
-                    flipCards.forEach(card => {
-                        setTimeout(() => card.classList.add('is-flipped'), delay);
-                        setTimeout(() => card.classList.remove('is-flipped'), delay + 2000);
-                        delay += 200;
-                    });
-                    observer.unobserve(cardGrid);
+            const updateBanner = () => {
+                banner.innerHTML = `<div class="animate-text-reveal">${AppData.rotatingHeadlines[currentIndex]}</div>`;
+                currentIndex = (currentIndex + 1) % AppData.rotatingHeadlines.length;
+            };
+
+            updateBanner();
+            setInterval(updateBanner, 3000);
+        },
+
+        initOfferCountdown() {
+            const countdownEl = document.getElementById('offer-countdown');
+            if (!countdownEl) return;
+
+            let targetDate = new Date();
+            targetDate.setDate(targetDate.getDate() + 7);
+
+            const interval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+                document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+                document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+
+                if (distance < 0) {
+                    clearInterval(interval);
+                    countdownEl.innerHTML = "<div class='text-lg font-bold'>Offer Expired</div>";
                 }
-            }, { threshold: 0.2 });
-            mobileCardObserver.observe(cardGrid);
+            }, 1000);
+        },
+
+        initFlipCards() {
+            document.querySelectorAll('.flip-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    card.classList.toggle('is-flipped');
+                });
+            });
+        },
+        
+        initModal() {
+            const modal = document.getElementById('enquiry-modal');
+            const modalContent = document.getElementById('modal-content');
+            const openTriggers = document.querySelectorAll('#enquire-btn-desktop, #enquire-btn-mobile, #enquire-btn-floating');
+            const closeBtn = document.getElementById('close-modal-btn');
+
+            if (!modal || !modalContent) return;
+
+            const openModal = () => {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modalContent.classList.remove('scale-95', 'opacity-0');
+                    modalContent.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            };
+            
+            const closeModal = () => {
+                modalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            };
+
+            openTriggers.forEach(btn => btn.addEventListener('click', openModal));
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+            document.addEventListener('keydown', (e) => {
+                if(e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+            });
+        },
+
+        initScrollAnimations() {
+            const animatedElements = document.querySelectorAll('.scroll-animate');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            animatedElements.forEach(el => observer.observe(el));
+        },
+        
+        initCounters() {
+            const counters = document.querySelectorAll('.counter[data-counter]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const target = +el.getAttribute('data-counter');
+                        const duration = 2000;
+                        const frameDuration = 1000 / 60;
+                        const totalFrames = Math.round(duration / frameDuration);
+                        let frame = 0;
+                        
+                        const counter = setInterval(() => {
+                            frame++;
+                            const progress = frame / totalFrames;
+                            const currentVal = Math.round(target * progress);
+                            
+                            const suffix = el.textContent.includes('%') ? '%' : (el.textContent.includes('+') ? '+' : '');
+                            
+                            el.textContent = currentVal.toLocaleString() + suffix;
+
+                            if (frame === totalFrames) {
+                                el.textContent = target.toLocaleString() + suffix;
+                                clearInterval(counter);
+                            }
+                        }, frameDuration);
+                        
+                        observer.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(counter => observer.observe(counter));
+        },
+
+        updateFooterYear() {
+            const yearEl = document.getElementById('footer-year');
+            if (yearEl) {
+                yearEl.textContent = `© ${new Date().getFullYear()} Sphurit Technologies. All rights reserved.`;
+            }
         }
-     });
+    };
 
-    // Toggle service expand/collapse
-    function toggleService(serviceId){
-        const content = document.getElementById(serviceId + '-content');
-        const icon = document.getElementById(serviceId + '-icon');
-        const header = document.querySelector(`[onclick*="${serviceId}"]`);
-        if(!content) return;
-        const isExpanded = content.classList.toggle('expanded');
-        if(icon) icon.classList.toggle('rotate-180', isExpanded);
-        if(header) header.setAttribute('aria-expanded', String(isExpanded));
-    }
+    // Run the app
+    App.init();
+// Mobile menu toggle
+const menuBtn = document.getElementById('menu-btn');
+const mobileNav = document.getElementById('mobile-nav');
+if (menuBtn && mobileNav) {
+  menuBtn.addEventListener('click', () => {
+    mobileNav.classList.toggle('hidden');
+  });
+}
 
-    // Modal helpers
-    function openEnquiryModal(){ 
-        const m=document.getElementById('enquiry-modal'); 
-        if(!m) return;
-        m.classList.remove('hidden'); 
-        // animate in
-        requestAnimationFrame(()=> {
-          m.classList.remove('opacity-0');
-          const md = m.querySelector('#modal-content');
-          if(md) md.classList.remove('scale-95');
-        });
-    }
-    function closeEnquiryModal(){ 
-        const m=document.getElementById('enquiry-modal'); 
-        if(!m) return;
-        m.classList.add('opacity-0'); 
-        const md = m.querySelector('#modal-content');
-        if(md) md.classList.add('scale-95');
-        setTimeout(()=>m.classList.add('hidden'),300);
-    }
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeEnquiryModal(); }});
-    </script>
+});
+</script>
+
 </body>
 </html>
+
+

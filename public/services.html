@@ -29,13 +29,12 @@
         .flip-card {
             perspective: 1500px;
             cursor: pointer;
-            min-height: 260px; /* ensures card area is visible */
+            min-height: 260px; /* Increased height */
         }
         .flip-card-inner {
             position: relative;
             width: 100%;
             height: 100%;
-            min-height: 260px; /* ensure children have space */
             transform-style: preserve-3d;
             transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -55,7 +54,6 @@
             padding: 1.5rem;
             border-radius: 1rem;
             text-align: center;
-            box-sizing: border-box;
         }
         .flip-card-front {
             background: linear-gradient(180deg, #fff, #f7fbff);
@@ -88,7 +86,7 @@
             border-radius: 1rem;
             padding: 1px;
             background: linear-gradient(120deg, var(--accent), var(--accent-2));
-            
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             pointer-events: none;
@@ -136,8 +134,6 @@
         .count-lg { font-family:'Playfair Display','Inter',serif; font-weight:800; color:var(--accent); font-size:1.4rem; }
 
         @media (prefers-reduced-motion: reduce) { *{ transition:none!important; animation:none!important; } }
-
-        /* corner-border visuals */
         .corner-border {
           position: relative;
           border-radius: 1rem;
@@ -153,8 +149,6 @@
           border-top: 4px solid #00598d;
           border-left: 4px solid #00598d;
           border-top-left-radius: 1rem;
-          pointer-events: none;
-          z-index: 1;
         }
         .corner-border::after {
           content: "";
@@ -166,8 +160,6 @@
           border-bottom: 4px solid #ff7a1a;
           border-right: 4px solid #ff7a1a;
           border-bottom-right-radius: 1rem;
-          pointer-events: none;
-          z-index: 1;
         }
         .corner-border > * { position: relative; z-index: 2; }
 
@@ -224,7 +216,7 @@
                     <p class="text-lg text-gray-600 max-w-3xl mx-auto">Hover or click to see what's included. Expand the sections below for a deep dive.</p>
                 </div>
 
-                <div id="services-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 p-6">
+                <div id="services-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 corner-border  p-6">
                     <!-- Cards will be injected by JS -->
                 </div>
             </div>
@@ -412,11 +404,7 @@
       </div>
     </div>
   </div>
-  <script>
-    // guard to avoid errors if span is missing
-    const fy = document.getElementById('footer-year');
-    if (fy) fy.innerText = new Date().getFullYear();
-  </script>
+  <script>document.getElementById('footer-year').innerText = new Date().getFullYear();</script>
 </footer>
 
     <!-- Enquiry Modal -->
@@ -434,205 +422,101 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function(){
-        try {
-            // --- Data for Dynamic Content ---
-            const serviceData = {
-                cards: [
-                    { title: "Website Development & UX", icon: "💻", color: "from-blue-500 to-blue-600", details: "<h4 class='font-semibold mb-2'>Includes:</h4><ul><li>Static & Dynamic Websites</li><li>Custom-coded Solutions</li><li>WordPress & CMS Builds</li><li>E-commerce Platforms</li></ul>" },
-                    { title: "Graphic Design & Branding", icon: "🎨", color: "from-purple-500 to-purple-600", details: "<h4 class='font-semibold mb-2'>Includes:</h4><ul><li>Logo & Identity Design</li><li>Marketing Collateral</li><li>UI/UX for Apps</li><li>Brand Style Guides</li></ul>" },
-                    { title: "Content & Scripting", icon: "✍️", color: "from-green-500 to-green-600", details: "<h4 class='font-semibold mb-2'>Includes:</h4><ul><li>SEO Content Strategy</li><li>Blog & Article Writing</li><li>Video Scripting</li><li>Ad Copywriting</li></ul>" },
-                    { title: "Growth & Performance Marketing", icon: "📊", color: "from-red-500 to-red-600", details: "<h4 class='font-semibold mb-2'>Includes:</h4><ul><li>PPC (Google, Meta)</li><li>Conversion Rate Optimization</li><li>Funnel Building</li><li>Analytics & Reporting</li></ul>" },
-                    { title: "Video Production & Editing", icon: "🎥", color: "from-indigo-500 to-indigo-600", details: "<h4 class='font-semibold mb-2'>Includes:</h4><ul><li>Corporate Videos</li><li>Social Media Ads</li><li>2D/3D Animation</li><li>Post-Production</li></ul>" },
-                    { title: "SEO Services", icon: "🔎", color: "from-yellow-500 to-amber-600", details: "<h4 class='font-semibold mb-2'>Includes:</h4><ul><li>Technical SEO Audits</li><li>On-Page & Off-Page SEO</li><li>Local SEO</li><li>Keyword Strategy</li></ul>" }
-                ],
-                deepDive: {
-                    'web-dev': `
-                      <div class="grid md:grid-cols-2 gap-6 py-4">
-                        <div>
-                          <h4 class="font-semibold mb-2 text-gray-800">Our Approach</h4>
-                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
-                            <li>User-centered design</li>
-                            <li>Mobile-first & performance budget</li>
-                            <li>Conversion optimization & A/B testing</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <h4 class="font-semibold mb-2 text-gray-800">Technologies</h4>
-                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
-                            <li>React / Next.js / WordPress</li>
-                            <li>Analytics & tracking (GA4, GTM)</li>
-                            <li>Hosting & performance tuning</li>
-                          </ul>
-                        </div>
-                      </div>`,
-                    'marketing': `
-                      <div class="grid md:grid-cols-3 gap-6 py-4">
-                        <div>
-                          <h4 class="font-semibold mb-2 text-gray-800">Paid Ads</h4>
-                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
-                            <li>Google, Meta, LinkedIn</li>
-                            <li>YouTube & programmatic</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <h4 class="font-semibold mb-2 text-gray-800">Optimization</h4>
-                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
-                            <li>Attribution & event architecture</li>
-                            <li>CRO & funnels</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <h4 class="font-semibold mb-2 text-gray-800">Retainers</h4>
-                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
-                            <li>Monthly media + creative</li>
-                            <li>Reporting & dashboards</li>
-                          </ul>
-                        </div>
-                      </div>`,
-                    'seo': `
-                      <div class="grid md:grid-cols-2 gap-6 py-4">
-                        <div>
-                          <h4 class="font-semibold mb-2 text-gray-800">Core SEO</h4>
-                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
-                            <li>Technical Site Audits</li>
-                            <li>Keyword Research & Strategy</li>
-                            <li>Content Gap Analysis</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <h4 class="font-semibold mb-2 text-gray-800">Authority Building</h4>
-                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
-                            <li>Link Building & Outreach</li>
-                            <li>Local SEO & GMB Optimization</li>
-                            <li>Digital PR</li>
-                          </ul>
-                        </div>
-                      </div>`,
-                    'video': `
-                      <div class="grid md:grid-cols-2 gap-6 py-4">
-                        <div>
-                          <h4 class="font-semibold mb-2 text-gray-800">Production</h4>
-                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
-                            <li>Concept & Scriptwriting</li>
-                            <li>On-site Filming</li>
-                            <li>Drone & Aerial Footage</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <h4 class="font-semibold mb-2 text-gray-800">Post-Production</h4>
-                          <ul class="text-gray-600 space-y-2 list-disc pl-5">
-                            <li>Editing & Color Grading</li>
-                            <li>Motion Graphics & Animation</li>
-                            <li>Sound Design & Mixing</li>
-                          </ul>
-                        </div>
-                      </div>`
-                }
-            };
+        // --- Data for Dynamic Content ---
+        const serviceData = {
+            cards: [
+                { title: "Website Development & UX", icon: "💻", color: "from-blue-500 to-blue-600", details: "<h4>Includes:</h4><ul><li>Static & Dynamic Websites</li><li>Custom-coded Solutions</li><li>WordPress & CMS Builds</li><li>E-commerce Platforms</li></ul>" },
+                { title: "Graphic Design & Branding", icon: "🎨", color: "from-purple-500 to-purple-600", details: "<h4>Includes:</h4><ul><li>Logo & Identity Design</li><li>Marketing Collateral</li><li>UI/UX for Apps</li><li>Brand Style Guides</li></ul>" },
+                { title: "Content & Scripting", icon: "✍️", color: "from-green-500 to-green-600", details: "<h4>Includes:</h4><ul><li>SEO Content Strategy</li><li>Blog & Article Writing</li><li>Video Scripting</li><li>Ad Copywriting</li></ul>" },
+                { title: "Growth & Performance Marketing", icon: "📊", color: "from-red-500 to-red-600", details: "<h4>Includes:</h4><ul><li>PPC (Google, Meta)</li><li>Conversion Rate Optimization</li><li>Funnel Building</li><li>Analytics & Reporting</li></ul>" },
+                { title: "Video Production & Editing", icon: "🎥", color: "from-indigo-500 to-indigo-600", details: "<h4>Includes:</h4><ul><li>Corporate Videos</li><li>Social Media Ads</li><li>2D/3D Animation</li><li>Post-Production</li></ul>" },
+                { title: "SEO Services", icon: "🔎", color: "from-yellow-500 to-amber-600", details: "<h4>Includes:</h4><ul><li>Technical SEO Audits</li><li>On-Page & Off-Page SEO</li><li>Local SEO</li><li>Keyword Strategy</li></ul>" }
+            ],
+            deepDive: {
+                'web-dev': `<div class="grid md:grid-cols-2 gap-6 py-4"><_h4>Our Approach</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>User-centered design</li><li>Mobile-first & performance budget</li><li>Conversion optimization & A/B testing</li></ul></div><div><h4>Technologies</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>React / Next.js / WordPress</li><li>Analytics & tracking (GA4, GTM)</li><li>Hosting & performance tuning</li></ul></div></div>`,
+                'marketing': `<div class="grid md:grid-cols-3 gap-6 py-4"><div><h4>Paid Ads</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Google, Meta, LinkedIn</li><li>YouTube & programmatic</li></ul></div><div><h4>Optimization</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Attribution & event architecture</li><li>CRO & funnels</li></ul></div><div><h4>Retainers</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Monthly media + creative</li><li>Reporting & dashboards</li></ul></div></div>`,
+                'seo': `<div class="grid md:grid-cols-2 gap-6 py-4"><div><h4>Core SEO</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Technical Site Audits</li><li>Keyword Research & Strategy</li><li>Content Gap Analysis</li></ul></div><div><h4>Authority Building</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Link Building & Outreach</li><li>Local SEO & GMB Optimization</li><li>Digital PR</li></ul></div></div>`,
+                'video': `<div class="grid md:grid-cols-2 gap-6 py-4"><div><h4>Production</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Concept & Scriptwriting</li><li>On-site Filming</li><li>Drone & Aerial Footage</li></ul></div><div><h4>Post-Production</h4><ul class="text-gray-600 space-y-2 list-disc pl-5"><li>Editing & Color Grading</li><li>Motion Graphics & Animation</li><li>Sound Design & Mixing</li></ul></div></div>`
+            }
+        };
 
-            // Populate Flip Cards
-            const servicesGrid = document.getElementById('services-grid');
-            if (servicesGrid) {
-                servicesGrid.innerHTML = serviceData.cards.map(card => `
-                    <div class="flip-card corner-border border border-gray-200 rounded-2xl">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r ${card.color} flex items-center justify-center text-white text-3xl">${card.icon}</div>
-                                <h3 class="text-xl font-bold">${card.title}</h3>
-                            </div>
-                            <div class="flip-card-back p-4">
-                                ${card.details}
-                            </div>
+        // Populate Flip Cards
+        const servicesGrid = document.getElementById('services-grid');
+        if (servicesGrid) {
+            servicesGrid.innerHTML = serviceData.cards.map(card => `
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r ${card.color} flex items-center justify-center text-white text-3xl">${card.icon}</div>
+                            <h3 class="text-xl font-bold">${card.title}</h3>
+                        </div>
+                        <div class="flip-card-back">
+                            ${card.details}
                         </div>
                     </div>
-                `).join('');
-            }
+                </div>
+            `).join('');
+        }
 
-            // Populate Deep Dive Sections (guarded replace)
-            for (const [key, value] of Object.entries(serviceData.deepDive)) {
-                const el = document.getElementById(`${key}-content`);
-                if (el) el.innerHTML = value;
-            }
+        // Populate Deep Dive Sections
+        for (const [key, value] of Object.entries(serviceData.deepDive)) {
+            const el = document.getElementById(`${key}-content`);
+            if (el) el.innerHTML = value.replace(/<h4>/g, '<h4 class="font-semibold mb-2 text-gray-800">');
+        }
+        
+        document.getElementById('footer-year-services').innerText = new Date().getFullYear();
 
-            // avoid crash if element missing
-            const footerYearServicesEl = document.getElementById('footer-year-services');
-            if (footerYearServicesEl) footerYearServicesEl.innerText = new Date().getFullYear();
-
-            // Intersection-observer based counters, with safe fallbacks
-            const counterObserver = ('IntersectionObserver' in window) ? new IntersectionObserver((entries, obs)=>{
-                entries.forEach(entry=>{
-                    if(entry.isIntersecting){
-                        const el = entry.target;
-                        const to = parseInt(el.dataset.counter || '0', 10);
-                        let start=0, duration=2000;
-                        const step = (timestamp) => {
-                            if (!start) start = timestamp;
-                            const progress = Math.min((timestamp - start) / duration, 1);
-                            el.textContent = Math.floor(progress * to).toLocaleString('en-IN');
-                            if (progress < 1) window.requestAnimationFrame(step);
-                        };
-                        window.requestAnimationFrame(step);
-                        obs.unobserve(el);
-                    }
-                });
-            },{ threshold: 0.25 }) : null;
-
-            if (counterObserver) {
-                document.querySelectorAll('[data-counter]').forEach(el=>counterObserver.observe(el));
-            } else {
-                // Fallback: animate immediately
-                document.querySelectorAll('[data-counter]').forEach(el=>{
+        const counterObserver = new IntersectionObserver((entries, obs)=>{
+            entries.forEach(entry=>{
+                if(entry.isIntersecting){
+                    const el = entry.target;
                     const to = parseInt(el.dataset.counter || '0', 10);
-                    el.textContent = to.toLocaleString('en-IN');
-                });
-            }
-
-            // Scroll reveal
-            const scrollObserve = ('IntersectionObserver' in window) ? new IntersectionObserver((entries)=>{
-                entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('animate'); });
-            },{ threshold: 0.12 }) : null;
-            if (scrollObserve) document.querySelectorAll('.scroll-animate').forEach(el=>scrollObserve.observe(el));
-            else document.querySelectorAll('.scroll-animate').forEach(el=>el.classList.add('animate')); // fallback reveal
-
-            // Flip card interactivity
-            const flipCards = document.querySelectorAll('.flip-card');
-            flipCards.forEach(card => {
-                card.setAttribute('tabindex', '0');
-                card.addEventListener('click', () => card.classList.toggle('is-flipped'));
-                card.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('is-flipped'); }
-                });
-                if (window.matchMedia('(hover: hover)').matches) {
-                    card.addEventListener('mouseenter', () => card.classList.add('is-flipped'));
-                    card.addEventListener('mouseleave', () => card.classList.remove('is-flipped'));
+                    let start=0, duration=2000;
+                    const step = (timestamp) => {
+                        if (!start) start = timestamp;
+                        const progress = Math.min((timestamp - start) / duration, 1);
+                        el.textContent = Math.floor(progress * to).toLocaleString('en-IN');
+                        if (progress < 1) window.requestAnimationFrame(step);
+                    };
+                    window.requestAnimationFrame(step);
+                    obs.unobserve(el);
                 }
             });
+        },{ threshold: 0.5 });
+        document.querySelectorAll('[data-counter]').forEach(el=>counterObserver.observe(el));
 
-            // Mobile entrance flip demo (only run if grid exists)
-            const cardGrid = document.getElementById('services-grid');
-            if (cardGrid && window.innerWidth < 768) {
-                const mobileCardObserver = ('IntersectionObserver' in window) ? new IntersectionObserver((entries, observer) => {
-                    if(entries[0] && entries[0].isIntersecting) {
-                        let delay = 100;
-                        flipCards.forEach(card => {
-                            setTimeout(() => card.classList.add('is-flipped'), delay);
-                            setTimeout(() => card.classList.remove('is-flipped'), delay + 2000);
-                            delay += 200;
-                        });
-                        observer.unobserve(cardGrid);
-                    }
-                }, { threshold: 0.2 }) : null;
-                if (mobileCardObserver) mobileCardObserver.observe(cardGrid);
-            }
-        } catch (err) {
-            // keep page functional — log for debugging
-            console.warn('services init error:', err);
-            // ensure critical UI visible
-            document.querySelectorAll('.scroll-animate').forEach(el=>el.classList.add('animate'));
-            document.querySelectorAll('[data-counter]').forEach(el => {
-                const to = parseInt(el.dataset.counter || '0', 10);
-                if(!Number.isNaN(to)) el.textContent = to.toLocaleString('en-IN');
+        const scrollObserver = new IntersectionObserver((entries)=>{
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('animate'); });
+        },{ threshold: 0.12 });
+        document.querySelectorAll('.scroll-animate').forEach(el=>scrollObserver.observe(el));
+        
+        const flipCards = document.querySelectorAll('.flip-card');
+        flipCards.forEach(card => {
+            card.setAttribute('tabindex', '0');
+            card.addEventListener('click', () => card.classList.toggle('is-flipped'));
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('is-flipped'); }
             });
+            if (window.matchMedia('(hover: hover)').matches) {
+                card.addEventListener('mouseenter', () => card.classList.add('is-flipped'));
+                card.addEventListener('mouseleave', () => card.classList.remove('is-flipped'));
+            }
+        });
+
+        const cardGrid = document.getElementById('services-grid');
+        if (cardGrid && window.innerWidth < 768) {
+            const mobileCardObserver = new IntersectionObserver((entries, observer) => {
+                if(entries[0].isIntersecting) {
+                    let delay = 100;
+                    flipCards.forEach(card => {
+                        setTimeout(() => card.classList.add('is-flipped'), delay);
+                        setTimeout(() => card.classList.remove('is-flipped'), delay + 2000);
+                        delay += 200;
+                    });
+                    observer.unobserve(cardGrid);
+                }
+            }, { threshold: 0.2 });
+            mobileCardObserver.observe(cardGrid);
         }
      });
 
@@ -646,8 +530,8 @@
         if(header) header.setAttribute('aria-expanded', String(isExpanded));
     }
 
-    function openEnquiryModal(){ const m=document.getElementById('enquiry-modal'); if(!m) return; m.classList.remove('hidden','opacity-0'); const md=m.querySelector('#modal-content'); if(md) md.classList.remove('scale-95');}
-    function closeEnquiryModal(){ const m=document.getElementById('enquiry-modal'); if(!m) return; m.classList.add('opacity-0'); const md=m.querySelector('#modal-content'); if(md) md.classList.add('scale-95'); setTimeout(()=>m.classList.add('hidden'),300);}
+    function openEnquiryModal(){ const m=document.getElementById('enquiry-modal'); m.classList.remove('hidden','opacity-0'); m.querySelector('#modal-content').classList.remove('scale-95');}
+    function closeEnquiryModal(){ const m=document.getElementById('enquiry-modal'); m.classList.add('opacity-0'); m.querySelector('#modal-content').classList.add('scale-95'); setTimeout(()=>m.classList.add('hidden'),300);}
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeEnquiryModal(); }});
     </script>
 </body>
